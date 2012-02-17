@@ -14,7 +14,7 @@ class Kohana_Service
 	 * Caching services
 	 * @var array
 	 */
-	static private $_services = array();
+	static protected $_services = array();
 
 	/**
 	 * The cached config file, can be manipulated with the setter
@@ -92,10 +92,12 @@ class Kohana_Service
 
 	/**
 	 * Initialize the service, if it's a php service, the library will be loaded here
-	 * @param  array $config
 	 * @return NULL
 	 */
-	abstract function init(array $config);
+	public function init()
+	{
+		
+	}
 
 	/**
 	 * Check if the service has been initialized, and if not, run init(), return FALSE if disabled
