@@ -14,9 +14,11 @@ abstract class Kohana_Service_Kissmertrics extends Service implements Service_Ty
 		if ( ! $this->initialized())
 			return NULL;
 
+		$queue = func_get_args();
+		
 		if ($this->is_async())
 		{
-			return '<script type="text/javascript">'.$this->render_events($queue).'</script>';
+			return '<script type="text/javascript">'.$this->render_queue($queue).'</script>';
 		}
 		else
 		{
