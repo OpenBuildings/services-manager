@@ -15,5 +15,5 @@ interface Service_Type_Javascript
 	 * Render some javascript for the header tag if its needed
 	 * @return string
 	 */
-	public function header();
+	public function head();
 }

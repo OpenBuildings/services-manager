@@ -7,7 +7,58 @@
 abstract class Kohana_Service_Kissmetrics extends Service implements Service_Type_Javascript, Service_Type_Php
 {
 	public $api_key;
+	public $php_api;
+	public $more = '';
 	public $queue = array();
+
+	/**
+	 * KM::record wrapper, silantly fails if Kissmetrics is not enabled
+	 * @param  string $action 
+	 * @param  array  $props 
+	 * @return NULL
+	 */
+	public function record($action, $props = array())
+	{
+		if ( ! $this->initialized())
+			return NULL;
+		
+		if ($this->php_api)
+		{
+			KM::record($action, $props);
+		}
+	}
+
+	/**
+	 * KM::record wrapper, silantly fails if Kissmetrics is not enabled
+	 * @param  array $params_array 
+	 * @return NULL
+	 */
+	public function set($params_array)
+	{
+		if ( ! $this->initialized())
+			return NULL;
+		
+		if ($this->php_api)
+		{
+			KM::set($params_array);
+		}
+	}
+
+	/**
+	 * KM::record wrapper, silantly fails if Kissmetrics is not enabled
+	 * @param  string $identifier 
+	 * @return NULL
+	 */
+	public function identify($identifier)
+	{
+		if ( ! $this->initialized())
+			return NULL;
+		
+		if ($this->php_api)
+		{
+			KM::identify($identifier);
+		}
+	}
 
 	public function queue($queue)
 	{
@@ -45,8 +96,10 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	public function init()
 	{
 		$this->api_key = $this->_config['api-key'];
+		$this->php_api = Arr::get($this->_config, 'php-api');
+		$this->more = Arr::get($this->_config, 'more');
 
-		if ($this->_config['php-api'])
+		if ($this->php_api)
 		{
 			require_once Kohana::find_file('vendor', 'km');
 
@@ -65,20 +118,19 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		}
 	}
 
-	public function header()
+	public function head()
 	{
 		if ( ! $this->initialized())
 			return NULL;
 
-
-		if ($this->_config['use-auth'] AND Auth::instance()->logged_in() AND ! isset($_COOKIE['km_ni']))
+		if (Arr::get($this->_config, 'use-auth') AND Auth::instance()->logged_in() AND ! isset($_COOKIE['km_ni']))
 		{
 			$this->queue[] = array('identify', Auth::instance()->get_user()->email);
 		}
 
-		$more = $this->render_queue($this->queue);
+		$more = $this->more."\n".$this->render_queue($this->queue);
 
-		return <<<ANALYTICS
+		return <<< ANALYTICS
 		<script type="text/javascript">
 			var _kmq = _kmq || [];
 

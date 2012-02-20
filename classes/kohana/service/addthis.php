@@ -21,7 +21,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		}
 	}
 
-	public function header()
+	public function head()
 	{
 		return NULL;
 	}

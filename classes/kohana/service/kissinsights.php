@@ -13,7 +13,7 @@ abstract class Kohana_Service_Kissinsights extends Service implements Service_Ty
 		$this->api_file = $this->_config['api-file'];
 	}
 
-	public function header()
+	public function head()
 	{
 		if ( ! $this->initialized())
 			return NULL;

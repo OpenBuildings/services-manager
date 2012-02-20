@@ -167,16 +167,16 @@ class Kohana_Service
 			$services = Service::names();
 		}
 
-		$renders = array();
+		$bodies = array();
 		foreach ($services as $service_name) 
 		{
 			$service = Service::factory($service_name);
 			if ($service instanceof Service_Type_Javascript)
 			{
-				$renders[] = $service->render();
+				$bodies[] = $service->body();
 			}
 		}
-		return implode("\n", $renders);
+		return implode("\n", $bodies);
 	}
 
 	static public function all_heads()
@@ -194,7 +194,7 @@ class Kohana_Service
 			$service = Service::factory($service_name);
 			if ($service instanceof Service_Type_Javascript)
 			{
-				$headers[] = $service->body();
+				$headers[] = $service->head();
 			}
 		}
 		return implode("\n", $headers);

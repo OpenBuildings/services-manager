@@ -34,7 +34,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 ANALYTICS;
 	}
 
-	public function header()
+	public function head()
 	{
 		return $this->header ? $this->code() : NULL;
 	}
