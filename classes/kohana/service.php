@@ -118,17 +118,53 @@ class Kohana_Service
 		return FALSE;
 	}
 
-	/**
-	 * Render enabled javascript services, you can specify a list of services to load, otherwise renders all of them
-	 * @return string
-	 */
-	static public function render_all()
+	static public function disable_all()
 	{
 		$services = func_get_args();
 
 		if (empty($services))
 		{
-			$services = array_keys(Kohana::$config->load('services-manager'));
+			$services = Service::names();
+		}
+
+		foreach ($services as $service_name) 
+		{
+			Service::factory($service_name)->enabled(FALSE);
+		}
+	}
+
+	static public function enable_all()
+	{
+		$services = func_get_args();
+
+		if (empty($services))
+		{
+			$services = Service::names();
+		}
+
+		foreach ($services as $service_name) 
+		{
+			Service::factory($service_name)->enabled(TRUE);
+		}
+	}
+
+
+	static public function names()
+	{
+		return array_keys(Kohana::$config->load('services-manager'));
+	}
+
+	/**
+	 * Render enabled javascript services, you can specify a list of services to load, otherwise renders all of them
+	 * @return string
+	 */
+	static public function all_renders()
+	{
+		$services = func_get_args();
+
+		if (empty($services))
+		{
+			$services = Service::names();
 		}
 
 		$renders = array();
@@ -149,7 +185,7 @@ class Kohana_Service
 
 		if (empty($services))
 		{
-			$services = array_keys(Kohana::$config->load('services-manager'));
+			$services = Service::names();
 		}
 
 		$headers = array();
