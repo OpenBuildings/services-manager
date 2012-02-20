@@ -45,7 +45,7 @@ class Kohana_Service
 	{
 		if ( ! isset(Service::$_services[$service_name]))
 		{
-			$config = Kohana::$config->load('services-manager.'.$service_name);
+			$config = Kohana::$config->load('services-manager.services.'.$service_name);
 			$class = 'Service_'.ucfirst($service_name);
 			Service::$_services[$service_name] = new $class($config);
 		}
@@ -151,7 +151,7 @@ class Kohana_Service
 
 	static public function names()
 	{
-		return array_keys(Kohana::$config->load('services-manager'));
+		return array_keys(Kohana::$config->load('services-manager.services'));
 	}
 
 	/**
@@ -173,13 +173,13 @@ class Kohana_Service
 			$service = Service::factory($service_name);
 			if ($service instanceof Service_Type_Javascript)
 			{
-				$renders = $service->render();
+				$renders[] = $service->render();
 			}
 		}
-		return join("\n", $renders);
+		return implode("\n", $renders);
 	}
 
-	static public function all_headers()
+	static public function all_bodies()
 	{
 		$services = func_get_args();
 
@@ -194,9 +194,9 @@ class Kohana_Service
 			$service = Service::factory($service_name);
 			if ($service instanceof Service_Type_Javascript)
 			{
-				$headers = $service->header();
+				$headers[] = $service->body();
 			}
 		}
-		return join("\n", $headers);
+		return implode("\n", $headers);
 	}
 }

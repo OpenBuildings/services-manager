@@ -24,7 +24,7 @@ abstract class Kohana_Service_Kissinsights extends Service implements Service_Ty
 ANALYTICS;
 	}
 
-	public function render()
+	public function body()
 	{
 		return NULL;
 	}

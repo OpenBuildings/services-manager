@@ -4,12 +4,12 @@
 * Kissmetrics service adapter
 * requires 'api-key' configuration
 */
-abstract class Kohana_Service_Kissmertrics extends Service implements Service_Type_Javascript, Service_Type_Php
+abstract class Kohana_Service_Kissmetrics extends Service implements Service_Type_Javascript, Service_Type_Php
 {
 	public $api_key;
 	public $queue = array();
 
-	public function events($queue)
+	public function queue($queue)
 	{
 		if ( ! $this->initialized())
 			return NULL;
@@ -29,7 +29,7 @@ abstract class Kohana_Service_Kissmertrics extends Service implements Service_Ty
 
 	public function is_async()
 	{
-		return Request::is_ajax();
+		return Request::current()->is_ajax();
 	}
 
 	public function render_queue($queue)
@@ -37,7 +37,7 @@ abstract class Kohana_Service_Kissmertrics extends Service implements Service_Ty
 		$queue_js = '';
 		foreach ($queue as $event) 
 		{
-			$queue_js .= "_kmq.push(".json_encode($queue).");\n";
+			$queue_js .= "_kmq.push(".json_encode($event).");\n";
 		}
 		return $queue_js;
 	}
@@ -97,7 +97,7 @@ abstract class Kohana_Service_Kissmertrics extends Service implements Service_Ty
 ANALYTICS;
 	}
 
-	public function render()
+	public function body()
 	{
 		return NULL;
 	}

@@ -39,7 +39,7 @@ ANALYTICS;
 		return $this->header ? $this->code() : NULL;
 	}
 
-	public function render()
+	public function body()
 	{
 		return $this->header ? NULL : $this->code();
 	}

@@ -13,7 +13,7 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 		if ( ! $this->initialized())
 			return NULL;
 
-		return $this->_color
+		return $this->_api;
 	}
 
 	public function __call($method, $args)
@@ -45,7 +45,7 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 
 		$this->api_key = $this->_config['api-key'];
 
-		$this->_color = new MCAPI($this->_config['api-key']));
+		$this->_api = new MCAPI($this->_config['api-key']);
 	}
 
 }

@@ -3,6 +3,6 @@
 /**
 * Interface for php interfaces 
 */
-interface Kohana_Service_Type_Php
+interface Service_Type_Php
 {
 }
