@@ -158,7 +158,7 @@ class Kohana_Service
 	 * Render enabled javascript services, you can specify a list of services to load, otherwise renders all of them
 	 * @return string
 	 */
-	static public function all_renders()
+	static public function all_bodies()
 	{
 		$services = func_get_args();
 
@@ -179,7 +179,7 @@ class Kohana_Service
 		return implode("\n", $renders);
 	}
 
-	static public function all_bodies()
+	static public function all_heads()
 	{
 		$services = func_get_args();
 
