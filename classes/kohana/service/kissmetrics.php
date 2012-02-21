@@ -60,6 +60,12 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		}
 	}
 
+	/**
+	 * Add event to record queue. If its an ajax request - return a script tag with the events inside it, otherwise add them to the queue to display in the header.
+	 * @param  array $queue event
+	 * @param  array ...
+	 * @return string
+	 */
 	public function queue($queue)
 	{
 		if ( ! $this->initialized())
@@ -78,12 +84,21 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 
 	}
 
+	/**
+	 * Return if its async environment or not.
+	 * @return boolean
+	 */
 	public function is_async()
 	{
 		return Request::current()->is_ajax();
 	}
 
-	public function render_queue($queue)
+	/**
+	 * Render an event queue. Return javascript commands to add thoes events to the kissmetrics queue
+	 * @param  array $queue the queue to render.
+	 * @return string
+	 */
+	public function render_queue(array $queue)
 	{
 		$queue_js = '';
 		foreach ($queue as $event) 
@@ -93,6 +108,10 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		return $queue_js;
 	}
 
+	/**
+	 * Initialize, if php-api is enabled, load KM class and identify the user based on km_ni/km_ai cookie
+	 * @return NULL
+	 */
 	public function init()
 	{
 		$this->api_key = $this->_config['api-key'];
@@ -118,6 +137,10 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		}
 	}
 
+	/**
+	 * Render the head script tags
+	 * @return string
+	 */
 	public function head()
 	{
 		if ( ! $this->initialized())
@@ -149,6 +172,10 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 ANALYTICS;
 	}
 
+	/**
+	 * Render the body tags (EMPTY)
+	 * @return NULL
+	 */
 	public function body()
 	{
 		return NULL;

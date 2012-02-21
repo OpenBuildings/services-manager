@@ -14,7 +14,7 @@ class Kohana_Service
 	 * Caching services
 	 * @var array
 	 */
-	static protected $_services = array();
+	static public $services = array();
 
 	/**
 	 * The cached config file, can be manipulated with the setter
@@ -43,14 +43,13 @@ class Kohana_Service
 	 */
 	static public function factory($service_name)
 	{
-		if ( ! isset(Service::$_services[$service_name]))
+		if ( ! isset(Service::$services[$service_name]))
 		{
-			$config = Kohana::$config->load('services-manager.services.'.$service_name);
 			$class = 'Service_'.ucfirst($service_name);
-			Service::$_services[$service_name] = new $class($config);
+			Service::$services[$service_name] = new $class($service_name);
 		}
 
-		return Service::$_services[$service_name];
+		return Service::$services[$service_name];
 	}
 
 	/**
@@ -85,9 +84,9 @@ class Kohana_Service
 		return $this->_config;
 	}
 
-	function __construct($config) 
+	function __construct($service_name) 
 	{
-		$this->_config = $config;
+		$this->_config = Kohana::$config->load('services-manager.services.'.$service_name);
 	}
 
 	/**
