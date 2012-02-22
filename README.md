@@ -9,6 +9,7 @@ Setting up:
 Presently there are 2 types of services:
 
 * Javascript Services - they require javascript files to load. To be able to use those you must place those helpers in appropriate places
+
 ```
 <html>
 <head>
@@ -24,6 +25,7 @@ Presently there are 2 types of services:
 </body>
 </html>
 ```
+
 * PHP Services - they handle their own affairs.
 
 Each service has its own configuration, you can see the default configuration in the ``services-manager.php`` file
@@ -35,14 +37,13 @@ Some services have helper methods to be used throughout your code. The general p
 
 For example this will render an addthis toolbox with sharing options for the current url, but if the service is disabled, it will return an empty string, thus your site should not be affected by disabling of the services and continue operation:
 
-``` 
+``` php
 <?php echo Service::factory('addthis')->toolbox() ?>
-
 ```
 
 In order to insure that for your service specific code will not execute if the service is disabled, you can use the initialized method:
 
-``` 
+``` php
 <?php if (Service::factory('addthis')->initialized()): ?>
 	<!-- Your custom addthis code goes here -->
 <?php endif; ?>
@@ -126,6 +127,7 @@ __Helpers__:
 * __is_async()__ : Find out if its an asynchronous request (ajax)
 
 Example using the queue helper method. This will either add those to the queue and render it in the header, or render them directly here with a script tag:
+
 ``` php
 <?php echo Service::factory('kissmetrics')->queue(
   array('trackClick', '.add-to-favourites', 'clicked on add to favourites in company profile'),
@@ -150,8 +152,6 @@ This service uses Mailchimp api Version 1.3 and all methods are proxied to the A
 Example:
 
 ``` php
-<?php
-Service::factory('mailchimp')->listSubscribe('newsletter', 'me@example.com');
-?>
+<?php Service::factory('mailchimp')->listSubscribe('newsletter', 'me@example.com'); ?>
 ```
 
