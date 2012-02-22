@@ -7,6 +7,11 @@
  * 
  * Each service has will be initialiized on first factory() invocation only. 
  * If the service is "disabled" it will not rise exceptions, just not work
+ * 
+ * @package    OpenBuildings/services-manager
+ * @author     Ivan Kerin
+ * @copyright  (c) 2012 OpenBuildings Inc.
+ * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
 class Kohana_Service
 {
