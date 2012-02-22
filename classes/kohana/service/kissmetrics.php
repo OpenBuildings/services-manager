@@ -19,13 +19,12 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function record($action, $props = array())
 	{
-		if ( ! $this->initialized())
-			return NULL;
-		
-		if ($this->php_api)
+		if ($this->initialized() AND $this->php_api)
 		{
 			KM::record($action, $props);
 		}
+
+		return $this;
 	}
 
 	/**
@@ -35,13 +34,12 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function set($params_array)
 	{
-		if ( ! $this->initialized())
-			return NULL;
-		
-		if ($this->php_api)
+		if ($this->initialized() AND $this->php_api)
 		{
 			KM::set($params_array);
 		}
+
+		return $this;
 	}
 
 	/**
@@ -51,13 +49,12 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function identify($identifier)
 	{
-		if ( ! $this->initialized())
-			return NULL;
-		
-		if ($this->php_api)
+		if ($this->initialized() AND $this->php_api)
 		{
 			KM::identify($identifier);
 		}
+
+		return $this;
 	}
 
 	/**
@@ -66,10 +63,15 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 * @param  array ...
 	 * @return string
 	 */
-	public function queue($queue)
+	public function queue($queue = NULL)
 	{
 		if ( ! $this->initialized())
 			return NULL;
+
+		if ($queue === NULL)
+		{
+			return $this->queue;
+		}
 
 		$queue = func_get_args();
 		
@@ -79,7 +81,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		}
 		else
 		{
-			$this->queue += $queue;
+			$this->queue = array_merge($this->queue, $queue);
 		}
 
 	}
