@@ -50,7 +50,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 	 * @param  array $attributes add custom attributes to the div, you can set 'class' => 'yourclass' and the default classes will still be added
 	 * @return string HTML div with the box
 	 */
-	public function box($url = NULL, $attributes = NULL)
+	public function toolbox($url = NULL, $attributes = NULL)
 	{
 		if ( ! $this->initialized())
 			return NULL;
