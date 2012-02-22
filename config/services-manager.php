@@ -4,28 +4,40 @@ return array(
 	'services' => array(
 		// 'exceptionalio' => array(
 		// 	'api-key' => '',
-		// 	'enabled' => FALSE,
+		// 	'enabled' => TRUE,
 		// 	'use-auth' => TRUE,
-		// ),
-		// 'kissmetrics' => array(
-		// 	'api-file' => '',
-		// 	'enabled' => FALSE,
-		// 	'use-auth' => TRUE,
-		// 	'php-api' => TRUE,
 		// ),
 		// 'kissmetrics' => array(
 		// 	'api-key' => '',
-		// 	'enabled' => FALSE,
+		// 	'enabled' => TRUE,
+		// 	'use-auth' => TRUE,
+		// 	'php-api' => TRUE,
+		// 	'more' => ""
+		// ),
+		// 'kissinsights' => array(
+		// 	'api-file' => '',
+		// 	'enabled' => TRUE,
 		// ),
 		// 'googleanalytics' => array(
 		// 	'api-key' => '',
-		// 	'enabled' => FALSE,
+		// 	'enabled' => TRUE,
 		// 	'header' => TRUE
 		// ),
-		// 'mailchimp' => array(
+		// 'addthis' => array(
+		// 	'enabled' => TRUE,
 		// 	'api-key' => '',
-		// 	'enabled' => FALSE,
-		// 	'lists' => array()
-		// )		
+		// 	'load-user-email' => TRUE,
+		// 	'addthis-config' => array(
+		// 		'ui_email_note' => 'Check out this great page',
+		// 		'ui_email_from' => ':user-email'
+		// 	)
+		// ),
+		// 'mailchimp' => array(
+		// 	'enabled' => TRUE,
+		// 	'api-key' => '',
+		// 	'lists' => array(
+		// 		'newsletter' => 'd1329b67e3'
+		// 	)
+		// )
 	)
 );

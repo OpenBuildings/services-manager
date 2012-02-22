@@ -6,10 +6,28 @@
 */
 abstract class Kohana_Service_Addthis extends Service implements Service_Type_Javascript
 {
+	/**
+	 * The api key used for addthis, something like ra-4f023b426eb7e111
+	 * @var string
+	 */
 	public $api_key;
-	public $addthis_config = array();
-	public $user_email;
 
+	/**
+	 * This will be added to addthis_config in the script
+	 * @var array
+	 */
+	public $addthis_config = array();
+
+	/**
+	 * Load the current user email to be used in the addthis config, boolean
+	 * @var bool
+	 */
+	public $user_email = FALSE;
+
+	/**
+	 * Set api_key and addthis_config, and load current user email if logged
+	 * @return NULL
+	 */
 	public function init()
 	{
 		$this->api_key = $this->_config['api-key'];
@@ -26,6 +44,35 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		return NULL;
 	}
 
+	/**
+	 * Render an addthis toolbox
+	 * @param  string $url        Override the current request url
+	 * @param  array $attributes add custom attributes to the div, you can set 'class' => 'yourclass' and the default classes will still be added
+	 * @return string HTML div with the box
+	 */
+	public function box($url = NULL, $attributes = NULL)
+	{
+		if ( ! $this->initialized())
+			return NULL;
+
+		$attributes = (array) $attributes;
+		$attributes['addthis:url'] = $url ? $url : URL::site(Request::initial()->url(), TRUE);
+		$attributes['class'] = Arr::get($attributes, 'class').' social-box addthis_toolbox addthis_default_style';
+
+		$attrs = HTML::attributes($attributes);
+		return "
+			<div $attrs>
+				<a class=\"addthis_button_preferred_1\"></a>
+				<a class=\"addthis_button_preferred_2\"></a>
+				<a class=\"addthis_button_preferred_3\"></a>
+				<a class=\"addthis_button_compact\">Share</a>
+			</div>";
+	}
+
+	/**
+	 * Render the javascript for addthis and render the script tag with the addthis_config variable
+	 * @return string
+	 */
 	public function body()
 	{
 		if ( ! $this->initialized())

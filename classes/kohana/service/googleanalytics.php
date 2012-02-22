@@ -15,6 +15,10 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 		$this->header = $this->_config['header'];
 	}
 
+	/**
+	 * Render the required code
+	 * @return string
+	 */
 	public function code()
 	{
 		if ( ! $this->initialized())
