@@ -9,7 +9,7 @@ Setting up:
 Presently there are 2 types of services:
 
 * Javascript Services - they require javascript files to load. To be able to use those you must place those helpers in appropriate places
-``` html
+```
 <html>
 <head>
 	<title>Site</title>
