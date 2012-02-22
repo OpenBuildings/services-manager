@@ -109,6 +109,12 @@ class Kohana_Service
 
 		if ($this->_enabled)
 		{
+			if ($role = Arr::get($this->_config, 'disabled-for-role') AND Auth::instance()->logged_in($role))
+			{
+				$this->_enabled = FALSE;
+				return FALSE;	
+			}
+
 			$this->init();
 			$this->_initialized = TRUE;
 			return TRUE;

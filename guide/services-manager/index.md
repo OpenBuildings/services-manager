@@ -48,6 +48,8 @@ In order to insure that for your service specific code will not execute if the s
 <?php endif; ?>
 ~~~
 
+You can also disable each service based on a role from jelly_auth. Just use the 'disabled-for-role' => '{somerole}' config parameter.
+
 There are some builtin services that are available:
 
 

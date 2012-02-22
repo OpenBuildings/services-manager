@@ -148,9 +148,12 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		if ( ! $this->initialized())
 			return NULL;
 
-		if (Arr::get($this->_config, 'use-auth') AND Auth::instance()->logged_in() AND ! isset($_COOKIE['km_ni']))
+		if (Arr::get($this->_config, 'use-auth') AND Auth::instance()->logged_in())
 		{
-			$this->queue[] = array('identify', Auth::instance()->get_user()->email);
+			if ( ! isset($_COOKIE['km_ni']))
+			{
+				$this->queue[] = array('identify', Auth::instance()->get_user()->email);
+			}
 		}
 
 		$more = $this->more."\n".$this->render_queue($this->queue);
