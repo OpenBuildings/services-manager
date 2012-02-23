@@ -48,7 +48,7 @@ In order to insure that for your service specific code will not execute if the s
 	<!-- Your custom addthis code goes here -->
 <?php endif; ?>
 ```
-You can also disable each service based on a role from jelly_auth. Just use the 'disabled-for-role' => '{somerole}' config parameter.
+You can also disable each service based on a role from jelly_auth. Just use the 'disabled-for-role' => '{somerole}' config parameter, or allow it only for certain roles with 'enabled-for-role' => '{somerole}'.
 
 
 There are some builtin services that are available:
@@ -61,6 +61,7 @@ __Configuraitons__:
 
 * __enabled__ : (bool)
 * __disabled-for-role__ : (string)
+* __enabled-for-role__ : (string)
 * __api-key__ : (string) your api key for addthis
 * __load-user-email__ : (bool) if you set this to TRUE will load the current user email and you can use :user-email to access it in the addthis-config
 * __addthis-config__ : (array) this will be use to set the javascript variable addthis_config, used by addthis.
@@ -77,6 +78,7 @@ __Configuraitons__:
 
 * __enabled__ : (bool)
 * __disabled-for-role__ : (string)
+* __enabled-for-role__ : (string)
 * __api-key__ : (string) your api key for exceptionalio
 * __use-auth__ : (bool) Get the current user id and email and set it as custom parameters for the exception
 
@@ -92,6 +94,7 @@ __Configuraitons__:
 
 * __enabled__ : (bool)
 * __disabled-for-role__ : (string)
+* __enabled-for-role__ : (string)
 * __api-key__ : (string) your api key for google analytics
 * __header__ : (bool) Set it to FALSE to place the GA code at the bottom of the page
 
@@ -103,6 +106,7 @@ __Configuraitons__:
 
 * __enabled__ : (bool)
 * __disabled-for-role__ : (string)
+* __enabled-for-role__ : (string)
 * __api-file__ : (string) the file for kissinsights - they don't have api keys yet, but the filename is unique
 
 
@@ -113,6 +117,7 @@ __Configuraitons__:
 
 * __enabled__ : (bool)
 * __disabled-for-role__ : (string)
+* __enabled-for-role__ : (string)
 * __api-key__ : (string) your api key for kissmetrics
 * __use-auth__ : (bool) Idintify the user with the email in the php api, using the currently logged user
 * __php-api__ : (bool) Enabled the php-api. If its set to FALSE all the php methods will silently fail and the KM class will not be loaded at all.
@@ -143,6 +148,7 @@ __Configuraitons__:
 
 * __enabled__ : (bool)
 * __disabled-for-role__ : (string)
+* __enabled-for-role__ : (string)
 * __api-key__ : (string) your api key for mailchimp
 * __lists__ : (array) Key value pairs for list alias => list id. If those are set you will be able to use list aliases instead of actual list ids, so for example listSubscribe('newsletter') will result in listSubscribe('<newsletter id>')
 

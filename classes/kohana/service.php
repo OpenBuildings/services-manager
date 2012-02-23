@@ -114,7 +114,7 @@ class Kohana_Service
 
 		if ($this->_enabled)
 		{
-			if ($role = Arr::get($this->_config, 'disabled-for-role') AND Auth::instance()->logged_in($role))
+			if ( ! $this->enabled_for_user())
 			{
 				$this->_enabled = FALSE;
 				return FALSE;	
@@ -126,6 +126,19 @@ class Kohana_Service
 		}
 
 		return FALSE;
+	}
+
+	public function enabled_for_user()
+	{
+		if ($role = Arr::get($this->_config, 'disabled-for-role'))
+		{
+			return ! Auth::instance()->logged_in($role);
+		}
+		if ($role = Arr::get($this->_config, 'enabled-for-role'))
+		{
+			return Auth::instance()->logged_in($role);	
+		}
+		return TRUE;
 	}
 
 	static public function disable_all()
