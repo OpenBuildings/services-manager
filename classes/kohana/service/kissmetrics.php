@@ -160,8 +160,12 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 				$this->queue[] = array('identify', Auth::instance()->get_user()->email);
 			}
 		}
+		$more = $this->render_queue($this->queue);
 
-		$more = $this->more."\n".$this->render_queue($this->queue);
+		if ($this->more)
+		{
+			$more .= "\n".View::factory($this->more);
+		}
 
 		return <<< ANALYTICS
 		<script type="text/javascript">
