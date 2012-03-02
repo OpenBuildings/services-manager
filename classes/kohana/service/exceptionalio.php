@@ -25,8 +25,11 @@ abstract class Kohana_Service_Exceptionalio extends Service implements Service_T
 		
 		try
 		{
-			Exceptional::$controller = Request::current()->controller();
-			Exceptional::$action = Request::current()->action();
+			if (Request::current())
+			{
+				Exceptional::$controller = Request::current()->controller();
+				Exceptional::$action = Request::current()->action();
+			}
 
 			if ($this->_config['use-auth'] AND Auth::instance()->logged_in() AND Auth::instance()->get_user())
 			{
