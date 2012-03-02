@@ -39,5 +39,24 @@ return array(
 		// 		'newsletter' => 'd1329b67e3'
 		// 	)
 		// )
+		// 
+		// 'facebook' => array(
+		// 	'enabled' => TRUE,
+		// 	'auth' => array(
+		// 		'appId' => '',
+		// 		'secret' => '',
+		// 	),
+		// 	'namespace' => '',
+		// 	'og_enabled' => FALSE,
+		// 	'jssdk' => array(
+		// 		'status' => TRUE,
+		// 		'cookie' => TRUE,
+		// 		'xfbml' => TRUE
+		// 	)
+		// ),
+		// 'beanstalkd' => array(
+		// 	'enabled' => TRUE,
+		// 	'server' => '127.0.0.1',
+		// ),
 	)
 );
