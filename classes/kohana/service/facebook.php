@@ -46,6 +46,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $og_post);
 		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($ch);
 		curl_close($ch);
 
