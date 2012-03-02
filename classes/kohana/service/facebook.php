@@ -23,7 +23,6 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		{
 			$this->_meta['fb:admins'] = $admins;
 		}
-
 	}
 
 	public function og_post($action, $name, $url)
