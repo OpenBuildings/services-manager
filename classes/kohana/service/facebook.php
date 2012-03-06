@@ -201,7 +201,6 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 
 	public function head()
 	{
-
 		$tags = array();
 		foreach ($this->_meta as $key => $value) 
 		{
