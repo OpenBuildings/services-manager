@@ -38,14 +38,15 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 			$action = $this->og_namespace().':'.$action;
 		}
 
-		$og_post = "https://graph.facebook.com/me/{$action}?".http_build_query(array(
-			$name => $url,
-			'access_token' => $this->access_token(),
-		));
+		$og_post = "https://graph.facebook.com/me/{$action}";
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $og_post);
 		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+			$name => $url,
+			'access_token' => $this->access_token(),
+		));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($ch);
 		curl_close($ch);
