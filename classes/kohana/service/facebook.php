@@ -39,9 +39,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 			$action = $this->og_namespace().':'.$action;
 		}
 
-		return $this->api("/me/{$action}", 'POST', array(
-			'name' => $url
-		));;
+		return $this->api("/me/{$action}", 'POST', array($name => $url));
 	}
 
 	/**
@@ -98,7 +96,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 
 		if ($permission !== NULL)
 		{
-			return empty(array_diff((array) $permission, $this->_permissions));
+			return count(array_diff((array) $permission, $this->_permissions)) == 0;
 		}
 
 		return $this->_permissions;
