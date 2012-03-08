@@ -14,6 +14,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	public $_facebook;
 	public $_user_id;
 	public $_user_data;
+	public $_permissions;
 	public $_meta = array();
 
 	public function init()
@@ -78,36 +79,34 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		return Arr::get($this->_config, 'og_enabled', FALSE);
 	}
 
-	protected function _get_permissions()
-	{
-		$permissions = $this->facebook()->api('/me/permissions');
-		return isset($permissions['data'][0]) ? array_keys($permissions['data'][0]) : array();
-	}
-
 	/**
-	 * Get all persmissons OR check for a single permission or an array of permissions
-	 * @param string|array $permission 
+	 * Get the facebook permissions, authorized by the user OR check for a single permission or an array of permissions
+	 * @return array
+	 */
+	
+	/**
+	 * Get the facebook permissions, authorized by the user OR check for a single permission or an array of permissions
+	 * @param  string|array $permission check for those permissions
 	 * @return bool|array
 	 */
-	public function permissions($permission = NULL)
+	protected function permissions($permission = NULL)
 	{
 		if ( ! $this->initialized())
 			return NULL;
 
-		if ($permission === NULL)
+		if ( ! $this->_permissions)
 		{
-			return $this->_get_permissions();
+			$this->_permissions = array_keys(Arr::path($this->facebook()->api('/me/permissions'), 'data.0', array()));
 		}
-		if (is_string($permission))
+
+		if ($permission !== NULL)
 		{
-			return in_array($permission, $this->_get_permissions());
+			return empty(array_diff((array) $permission, $this->_permissions));
 		}
-		if (is_array($permission))
-		{
-			$array_diff = array_diff($permission, $this->_get_permissions());
-			return empty($array_diff);
-		}
+
+		return $this->_permissions;
 	}
+
 
 	public function user_data()
 	{
