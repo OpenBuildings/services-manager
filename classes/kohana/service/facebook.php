@@ -39,22 +39,19 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 			$action = $this->og_namespace().':'.$action;
 		}
 
-		$og_post = "https://graph.facebook.com/me/{$action}";
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $og_post);
-		curl_setopt($ch, CURLOPT_POST, TRUE);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-			$name => $url,
-			'access_token' => $this->access_token(),
-		));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		$response = curl_exec($ch);
-		curl_close($ch);
-
-		return $response;
+		return $this->api("/me/{$action}", 'POST', array(
+			'name' => $url
+		));;
 	}
 
+	/**
+	 * Perform a post request with the facebook API
+	 * @param  string $message [description]
+	 * @param  string $name    [description]
+	 * @param  string $url     [description]
+	 * @param  string $picture [description]
+	 * @return mixed
+	 */
 	public function feed_post($message, $name, $url, $picture = NULL)
 	{
 		if ( ! $this->initialized())
@@ -96,7 +93,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 
 		if ( ! $this->_permissions)
 		{
-			$this->_permissions = array_keys(Arr::path($this->facebook()->api('/me/permissions'), 'data.0', array()));
+			$this->_permissions = array_keys(Arr::path($this->api('/me/permissions'), 'data.0', array()));
 		}
 
 		if ($permission !== NULL)
@@ -108,17 +105,28 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	}
 
 
+	/**
+	 * Get the data from a graph /me request
+	 * @return array
+	 */
 	public function user_data()
 	{
 		if ( ! $this->initialized())
 			return NULL;
 
-		if ($this->_user_data)
-			return $this->_user_data;
-		
-		return $this->_user_data = $this->facebook()->api('/me');
+		if ( ! $this->_user_data)
+		{
+			$this->_user_data = $this->api('/me');	
+		}
+
+		return $this->_user_data;
 	}	
 
+	/**
+	 * Get or set the access token for the current facebook session
+	 * @param  string $access_token [description]
+	 * @return string
+	 */
 	public function access_token($access_token = NULL)
 	{
 		if ( ! $this->initialized())
@@ -133,22 +141,37 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		return $this->facebook()->getAccessToken();
 	}
 
+	/**
+	 * Get the facebook id of the user for the current session
+	 * @return string
+	 */
 	public function user_id()
 	{
 		if ( ! $this->initialized())
 			return NULL;
 
-		if ($this->_user_id)
-			return $this->_user_id;
+		if ( ! $this->_user_id)
+		{
+			$this->_user_id = $this->facebook()->getUser();
+		}
 
-		return $this->_user_id = $this->facebook()->getUser();
+		return $this->_user_id;
 	}
 
+	/**
+	 * Check if the facebook session needs to be refresshed (expired access token)
+	 * @return bool
+	 */
 	public function needs_refresh()
 	{
 		return ! (bool) $this->facebook()->getUser();
 	}
 
+	/**
+	 * Perform an API request on facebook, wrapper method on facebook php-sdk api method
+	 * @param  string $request the request URL
+	 * @return mixed
+	 */
 	public function api($request)
 	{
 		if ( ! $this->initialized())
@@ -159,6 +182,10 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		return call_user_func_array(array($this->facebook(), 'api'), $args);
 	}
 
+	/**
+	 * Return the facebook php-sdk
+	 * @return Facebook
+	 */
 	public function facebook()
 	{
 		if ( ! $this->initialized())
@@ -172,6 +199,10 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		return $this->_facebook = new Facebook(Arr::get($this->_config, 'auth'));
 	}
 
+	/**
+	 * Get the og namespage from configuration
+	 * @return string
+	 */
 	public function og_namespace()
 	{
 		if ( ! $this->initialized())
@@ -180,6 +211,13 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		return Arr::get($this->_config, 'namespace', FALSE);
 	}
 
+	/**
+	 * Get / set meta tags for facebook. You can pass an array, or a key and value arguments. 
+	 * Also if you want multiple values for each key, just use an array value
+	 * @param  string|array $value  a key or a key => value array
+	 * @param  miexed $value2 the value to be set
+	 * @return array|NULL
+	 */
 	public function meta($value = NULL, $value2 = NULL)
 	{
 		if ( ! $this->initialized())
