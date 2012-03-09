@@ -42,6 +42,11 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		return $this->api("/me/{$action}", 'POST', array($name => $url));
 	}
 
+	public function delete($opengraph_id)
+	{
+		return $this->api('/'.$opengraph_id, 'DELETE');
+	}
+
 	/**
 	 * Perform a post request with the facebook API
 	 * @param  string $message [description]
