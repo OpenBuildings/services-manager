@@ -89,7 +89,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	 * @param  string|array $permission check for those permissions
 	 * @return bool|array
 	 */
-	protected function permissions($permission = NULL)
+	public function permissions($permission = NULL)
 	{
 		if ( ! $this->initialized())
 			return NULL;
