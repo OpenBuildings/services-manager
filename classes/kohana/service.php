@@ -17,24 +17,28 @@ class Kohana_Service
 {
 	/**
 	 * Caching services
+	 * 
 	 * @var array
 	 */
 	static public $services = array();
 
 	/**
 	 * The cached config file, can be manipulated with the setter
+	 * 
 	 * @var array
 	 */
 	protected $_config = array();
 
 	/**
 	 * If this is false the service will not be initialized, but all of it public methods should still be accessible
+	 * 
 	 * @var boolean
 	 */
 	protected $_enabled = TRUE;
 
 	/**
 	 * Whether the service has been initialized, based on this attributes runs init() only once
+	 * 
 	 * @var boolean
 	 */
 	private $_initialized = FALSE;
@@ -51,6 +55,7 @@ class Kohana_Service
 		if ( ! isset(Service::$services[$service_name]))
 		{
 			$class = 'Service_'.ucfirst($service_name);
+			
 			Service::$services[$service_name] = new $class($service_name);
 		}
 
@@ -59,6 +64,7 @@ class Kohana_Service
 
 	/**
 	 * Getter / setter for enabled attribute
+	 * 
 	 * @param  bool $enabled 
 	 * @return bool|$this
 	 */
@@ -67,6 +73,7 @@ class Kohana_Service
 		if ($enabled !== NULL)
 		{
 			$this->_enabled = (bool) $enabled;
+			
 			return $this;
 		}
 
@@ -75,6 +82,7 @@ class Kohana_Service
 
 	/**
 	 * Getter / setter for config. If you pass an array, merges it with the current configuraton
+	 * 
 	 * @param  [type] $config [description]
 	 * @return [type]
 	 */
@@ -96,6 +104,7 @@ class Kohana_Service
 
 	/**
 	 * Initialize the service, if it's a php service, the library will be loaded here
+	 * 
 	 * @return NULL
 	 */
 	public function init()
@@ -105,6 +114,7 @@ class Kohana_Service
 
 	/**
 	 * Check if the service has been initialized, and if not, run init(), return FALSE if disabled
+	 * 
 	 * @return [type]
 	 */
 	public function initialized()
@@ -117,11 +127,13 @@ class Kohana_Service
 			if ( ! $this->enabled_for_user())
 			{
 				$this->_enabled = FALSE;
+				
 				return FALSE;	
 			}
 
 			$this->init();
 			$this->_initialized = TRUE;
+			
 			return TRUE;
 		}
 
@@ -134,10 +146,12 @@ class Kohana_Service
 		{
 			return ! Auth::instance()->logged_in($role);
 		}
+		
 		if ($role = Arr::get($this->_config, 'enabled-for-role'))
 		{
 			return Auth::instance()->logged_in($role);	
 		}
+		
 		return TRUE;
 	}
 
@@ -179,6 +193,7 @@ class Kohana_Service
 
 	/**
 	 * Render enabled javascript services, you can specify a list of services to load, otherwise renders all of them
+	 * 
 	 * @return string
 	 */
 	static public function all_bodies()
@@ -191,35 +206,42 @@ class Kohana_Service
 		}
 
 		$bodies = array();
+		
 		foreach ($services as $service_name) 
 		{
 			$service = Service::factory($service_name);
+			
 			if ($service instanceof Service_Type_Javascript)
 			{
 				$bodies[] = $service->body();
 			}
 		}
+		
 		return implode("\n", $bodies);
 	}
 
 	static public function all_heads()
 	{
 		$services = func_get_args();
-
+		
 		if (empty($services))
 		{
 			$services = Service::names();
 		}
 
 		$headers = array();
+		
 		foreach ($services as $service_name) 
 		{
 			$service = Service::factory($service_name);
+			
 			if ($service instanceof Service_Type_Javascript)
 			{
 				$headers[] = $service->head();
 			}
 		}
+		
 		return implode("\n", $headers);
 	}
 }
+
