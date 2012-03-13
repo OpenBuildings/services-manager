@@ -97,7 +97,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function is_async()
 	{
-		return Request::current()->is_ajax();
+		return Request::initial()->is_ajax();
 	}
 
 	/**
