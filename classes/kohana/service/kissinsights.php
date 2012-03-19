@@ -20,8 +20,6 @@ abstract class Kohana_Service_Kissinsights extends Service implements Service_Ty
 
 	public function head()
 	{
-		var_dump($this->initialized());
-		die();
 		if ( ! $this->initialized())
 			return NULL;
 
