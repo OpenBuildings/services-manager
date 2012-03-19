@@ -26,6 +26,22 @@ class Kohana_Service_Beanstalkd extends Service implements Service_Type_Php
 		return $return instanceof Pheanstalk ? $this : $return;
 	}
 
+	public function process_tube($tube_name)
+	{
+		if ( ! $this->initialized())
+			return NULL;
+
+		$job = $this->_pheanstalk->watch($tube_name)->reserve();
+
+		if ($job)
+		{
+			$tube = Service_Beanstalkd_Tube::factory($tube_name);
+			$tube->process_job($job);
+			unset($tube);
+			$this->_pheanstalk->delete($job);
+		}
+	}
+
 	/**
 	 * Run Exceptional setup
 	 * @return NULL
