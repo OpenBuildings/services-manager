@@ -3,7 +3,7 @@
 /**
  * Kissmetrics service adapter
  * requires 'api-key' configuration
- * 
+ *
  * @package    OpenBuildings/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 OpenBuildings Inc.
@@ -18,8 +18,8 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 
 	/**
 	 * KM::record wrapper, silantly fails if Kissmetrics is not enabled
-	 * @param  string $action 
-	 * @param  array  $props 
+	 * @param  string $action
+	 * @param  array  $props
 	 * @return NULL
 	 */
 	public function record($action, $props = array())
@@ -34,7 +34,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 
 	/**
 	 * KM::record wrapper, silantly fails if Kissmetrics is not enabled
-	 * @param  array $params_array 
+	 * @param  array $params_array
 	 * @return NULL
 	 */
 	public function set($params_array)
@@ -49,7 +49,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 
 	/**
 	 * KM::record wrapper, silantly fails if Kissmetrics is not enabled
-	 * @param  string $identifier 
+	 * @param  string $identifier
 	 * @return NULL
 	 */
 	public function identify($identifier)
@@ -79,7 +79,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		}
 
 		$queue = func_get_args();
-		
+
 		if ($this->is_async())
 		{
 			return '<script type="text/javascript">'.$this->render_queue($queue).'</script>';
@@ -108,7 +108,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	public function render_queue(array $queue)
 	{
 		$queue_js = '';
-		foreach ($queue as $event) 
+		foreach ($queue as $event)
 		{
 			$queue_js .= "_kmq.push(".json_encode($event).");\n";
 		}
@@ -150,6 +150,15 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function head()
 	{
+		return NULL;
+	}
+
+	/**
+	 * Render the body tags (EMPTY)
+	 * @return NULL
+	 */
+	public function body()
+	{
 		if ( ! $this->initialized())
 			return NULL;
 
@@ -184,14 +193,5 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 			{$more}
 		</script>
 ANALYTICS;
-	}
-
-	/**
-	 * Render the body tags (EMPTY)
-	 * @return NULL
-	 */
-	public function body()
-	{
-		return NULL;
 	}
 }
