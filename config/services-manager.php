@@ -58,5 +58,9 @@ return array(
 		// 	'enabled' => TRUE,
 		// 	'server' => '127.0.0.1',
 		// ),
+		// 'chartbeat' => array(
+		// 	'enabled' => TRUE,
+		// 	'config' => array('uid' => ... , 'domain' => ....),
+		// ),
 	)
 );
