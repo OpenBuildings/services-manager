@@ -3,7 +3,7 @@
 /**
  * Facebook service adapter
  * requires 'auth' configuration array with apiId and secret
- * 
+ *
  * @package    OpenBuildings/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 OpenBuildings Inc.
@@ -26,7 +26,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		}
 	}
 
-	public function og_post($action, $name, $url)
+	public function og_post($action, $name, $url, array $params = array())
 	{
 		if ( ! $this->initialized() OR ! $this->og_enabled())
 			return NULL;
@@ -39,7 +39,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 			$action = $this->og_namespace().':'.$action;
 		}
 
-		return $this->api("/me/{$action}", 'POST', array($name => $url));
+		return $this->api("/me/{$action}", 'POST', Arr::merge(array($name => $url), $params));
 	}
 
 	public function delete($opengraph_id)
@@ -67,7 +67,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 			'link' => $url,
 			'picture' => $picture ? $picture : Arr::get($defaults, 'picture')
 		));
-		
+
 		$this->api('/me/feed', 'POST', $attachment);
 	}
 
@@ -83,7 +83,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	 * Get the facebook permissions, authorized by the user OR check for a single permission or an array of permissions
 	 * @return array
 	 */
-	
+
 	/**
 	 * Get the facebook permissions, authorized by the user OR check for a single permission or an array of permissions
 	 * @param  string|array $permission check for those permissions
@@ -119,11 +119,11 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 
 		if ( ! $this->_user_data)
 		{
-			$this->_user_data = $this->api('/me');	
+			$this->_user_data = $this->api('/me');
 		}
 
 		return $this->_user_data;
-	}	
+	}
 
 	/**
 	 * Get or set the access token for the current facebook session
@@ -215,7 +215,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	}
 
 	/**
-	 * Get / set meta tags for facebook. You can pass an array, or a key and value arguments. 
+	 * Get / set meta tags for facebook. You can pass an array, or a key and value arguments.
 	 * Also if you want multiple values for each key, just use an array value
 	 * @param  string|array $value  a key or a key => value array
 	 * @param  miexed $value2 the value to be set
@@ -243,13 +243,13 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	public function head()
 	{
 		$tags = array();
-		foreach ($this->_meta as $key => $value) 
+		foreach ($this->_meta as $key => $value)
 		{
 			$key = $this->_meta_params($key);
 
 			if (is_array($value))
 			{
-				foreach ($value as $value_item) 
+				foreach ($value as $value_item)
 				{
 					$tags[] = '<meta property="'.$key.'" content="'.$this->_meta_params($value_item).'" />';
 				}
