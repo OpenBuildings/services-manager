@@ -39,7 +39,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 			$action = $this->og_namespace().':'.$action;
 		}
 
-		return $this->api("/me/{$action}", 'POST', Arr::merge(array($name => $url), $params));
+		return $this->api("/me/{$action}", 'POST', Arr::merge(array($name => $url), array_filter($params)));
 	}
 
 	public function delete($opengraph_id)
