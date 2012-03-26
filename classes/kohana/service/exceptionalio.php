@@ -41,7 +41,7 @@ abstract class Kohana_Service_Exceptionalio extends Service implements Service_T
 
 			if ($exception->getCode() == 404)
 			{
-				Exceptional::handle_exception(new Http404Error($exception->getMessage()), FALSE);
+				// Exceptional::handle_exception(new Http404Error($exception->getMessage()), FALSE);
 			}
 			else
 			{
