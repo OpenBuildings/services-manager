@@ -121,7 +121,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function init()
 	{
-		$this->api_key = $this->_config['api-key'];
+		$this->api_key = Arr::get($this->_config, 'api-key');
 		$this->php_api = Arr::get($this->_config, 'php-api');
 		$this->more = Arr::get($this->_config, 'more');
 

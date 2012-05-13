@@ -269,7 +269,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 
 	public function body()
 	{
-		$options = json_encode(Arr::merge(array('appId' => Arr::path($this->_config, 'auth.appId')), Arr::get($this->_config, 'jssdk')));
+		$options = json_encode(Arr::merge(array('appId' => Arr::path($this->_config, 'auth.appId')), Arr::get($this->_config, 'jssdk', array())));
 
 		return <<<BODY
 			<div id="fb-root"></div>

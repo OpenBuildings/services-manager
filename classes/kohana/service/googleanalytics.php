@@ -16,8 +16,8 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 
 	public function init()
 	{
-		$this->api_key = $this->_config['api-key'];
-		$this->header = $this->_config['header'];
+		$this->api_key = Arr::get($this->_config, 'api-key');
+		$this->header = Arr::get($this->_config, 'header');
 	}
 
 	/**

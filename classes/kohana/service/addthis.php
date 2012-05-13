@@ -35,7 +35,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 	 */
 	public function init()
 	{
-		$this->api_key = $this->_config['api-key'];
+		$this->api_key = Arr::get($this->_config, 'api-key');
 		$this->addthis_config = Arr::get($this->_config, 'addthis-config');
 
 		if (Arr::get($this->_config, 'load-user-email') AND Auth::instance()->logged_in())
