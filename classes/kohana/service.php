@@ -77,7 +77,7 @@ class Kohana_Service
 			return $this;
 		}
 
-		return $this->enabled;
+		return $this->_enabled;
 	}
 
 	/**
