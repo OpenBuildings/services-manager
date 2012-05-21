@@ -71,7 +71,33 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 				<a class=\"addthis_button_preferred_2\"></a>
 				<a class=\"addthis_button_preferred_3\"></a>
 				<a class=\"addthis_button_compact\">Share</a>
-			</div>";
+			</div>";				
+	}
+	
+	/**
+	 * Render an addthis vertical toolbox
+	 * @param  string $url        Override the current request url
+	 * @param  array $attributes add custom attributes to the div, you can set 'class' => 'yourclass' and the default classes will still be added
+	 * @return string HTML div with the box
+	 */
+	public function toolbox_vertical($url = NULL, $attributes = NULL)
+	{
+		if ( ! $this->initialized())
+			return NULL;
+
+		$attributes = (array) $attributes;
+		$attributes['addthis:url'] = $url ? $url : URL::site(Request::initial()->url(), TRUE);
+		$attributes['class'] = Arr::get($attributes, 'class').' addthis_toolbox addthis_floating_style addthis_counter_style';
+
+		$attrs = HTML::attributes($attributes);		
+		
+		return "
+			<div $attrs>
+				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
+				<a class=\"addthis_button_tweet\" tw:count=\"vertical\"></a>
+				<a class=\"addthis_button_google_plusone\" g:plusone:size=\"tall\"></a>
+				<a class=\"addthis_counter\"></a>
+			</div>";			
 	}
 
 	/**
@@ -86,7 +112,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$addthis_config = json_encode((object) $this->addthis_config);
 
 		$render = <<<ANALYTICS
-  	<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid={$this->api_key}"></script>
+  	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid={$this->api_key}"></script>
   	<script type="text/javascript">
   		var addthis_config = {$addthis_config};
   	</script>
