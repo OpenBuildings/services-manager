@@ -81,11 +81,6 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 
 	/**
 	 * Get the facebook permissions, authorized by the user OR check for a single permission or an array of permissions
-	 * @return array
-	 */
-
-	/**
-	 * Get the facebook permissions, authorized by the user OR check for a single permission or an array of permissions
 	 * @param  string|array $permission check for those permissions
 	 * @return bool|array
 	 */
