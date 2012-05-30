@@ -20,6 +20,14 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 		$this->header = Arr::get($this->_config, 'header');
 	}
 
+	public function header()
+	{
+		if ( ! $this->initialized())
+			return NULL;
+
+		return $this->header;
+	}
+
 	/**
 	 * Render the required code
 	 * @return string
@@ -45,11 +53,11 @@ ANALYTICS;
 
 	public function head()
 	{
-		return $this->header ? $this->code() : NULL;
+		return $this->header() ? $this->code() : NULL;
 	}
 
 	public function body()
 	{
-		return $this->header ? NULL : $this->code();
+		return $this->header() ? NULL : $this->code();
 	}
 }
