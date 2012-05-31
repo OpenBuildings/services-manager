@@ -59,6 +59,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	{
 		if ( ! $this->initialized())
 			return NULL;
+		
 		$defaults = Arr::get($this->_config, 'post', array());
 
 		$attachment = Arr::merge($defaults, array(
