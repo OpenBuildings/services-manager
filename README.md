@@ -48,7 +48,7 @@ In order to insure that for your service specific code will not execute if the s
 	<!-- Your custom addthis code goes here -->
 <?php endif; ?>
 ```
-You can also disable each service based on a role from jelly_auth. Just use the 'disabled-for-role' => '{somerole}' config parameter, or allow it only for certain roles with 'enabled-for-role' => '{somerole}'.
+You can also disable each service based on a role from jam_auth. Just use the 'disabled-for-role' => '{somerole}' config parameter, or allow it only for certain roles with 'enabled-for-role' => '{somerole}'.
 
 
 There are some builtin services that are available:
