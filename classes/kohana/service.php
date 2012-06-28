@@ -100,6 +100,7 @@ class Kohana_Service
 	function __construct($service_name) 
 	{
 		$this->_config = Kohana::$config->load('services-manager.services.'.$service_name);
+		$this->_enabled = Arr::get($this->_config, 'enabled');
 	}
 
 	/**
