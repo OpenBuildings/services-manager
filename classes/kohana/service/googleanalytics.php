@@ -37,10 +37,20 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 		if ( ! $this->initialized())
 			return NULL;
 
+		if (Ab_Test::is_active())
+		{
+			$custom_vars = "_gaq.push(['_setCustomVar', 1, 'ABTest', 'Variation B', 1]);";
+		}
+		else
+		{
+			$custom_vars = "_gaq.push(['_setCustomVar', 1, 'ABTest', 'Variation A', 1]);";
+		}
+		
 		return <<<ANALYTICS
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', '{$this->api_key}']);
+	{$custom_vars}
 	_gaq.push(['_trackPageview']);
 	(function() {
 	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
