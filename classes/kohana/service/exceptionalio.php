@@ -50,7 +50,7 @@ abstract class Kohana_Service_Exceptionalio extends Service implements Service_T
 		}
 		catch (Exception $local_exception) 
 		{
-			Log::instance(Log::ERROR, $local_exception->getMessage());
+			Log::instance()->add(Log::ERROR, $local_exception->getMessage());
 		}
 	}
 
