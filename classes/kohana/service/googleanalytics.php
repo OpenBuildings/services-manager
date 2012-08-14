@@ -41,7 +41,6 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', '{$this->api_key}']);
-	{$custom_vars}
 	_gaq.push(['_trackPageview']);
 	(function() {
 	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
