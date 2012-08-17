@@ -73,7 +73,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 				<a class=\"addthis_button_compact\">Share</a>
 			</div>";				
 	}
-	
+
 	/**
 	 * Render an addthis vertical toolbox
 	 * @param  string $url        Override the current request url
