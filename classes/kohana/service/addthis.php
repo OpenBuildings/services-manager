@@ -99,7 +99,32 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 				<a class=\"addthis_counter\"></a>
 			</div>";			
 	}
+	
+	/**
+	 * Same style as vertical box, but horizontal
+	 * @param  string $url        Override the current request url
+	 * @param  array $attributes add custom attributes to the div, you can set 'class' => 'yourclass' and the default classes will still be added
+	 * @return string HTML div with the box
+	 */
+	public function toolbox_horizontal($url = NULL, $attributes = NULL)
+	{
+		if ( ! $this->initialized())
+			return NULL;
 
+		$attributes = (array) $attributes;
+		$attributes['addthis:url'] = $url ? $url : URL::site(Request::initial()->url(), TRUE);
+		$attributes['class'] = Arr::get($attributes, 'class').' addthis_toolbox addthis_floating_style addthis_counter_style horizontal';
+
+		$attrs = HTML::attributes($attributes);		
+		
+		return "
+			<div $attrs>
+				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
+				<a class=\"addthis_button_tweet\" tw:count=\"vertical\"></a>
+				<a class=\"addthis_button_google_plusone\" g:plusone:size=\"tall\"></a>
+			</div>";			
+	}
+	
 	/**
 	 * Render the javascript for addthis and render the script tag with the addthis_config variable
 	 * @return string
