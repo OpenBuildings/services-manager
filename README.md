@@ -161,3 +161,9 @@ Example:
 <?php Service::factory('mailchimp')->listSubscribe('newsletter', 'me@example.com'); ?>
 ```
 
+License
+-------
+
+jamaker is Copyright © 2012 OpenBuildings Inc, developed by Ivan Kerin. It is free software, and may be redistributed under the terms specified in the LICENSE file.
+
+
