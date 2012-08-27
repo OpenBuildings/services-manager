@@ -34,6 +34,9 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		if ( ! Valid::url($url))
 			throw new Kohana_Exception("URL :url passed to facebook is not valid", array(':url' => $url));
 
+		if ( ! $this->permissions('publish_actions'))
+			throw new Kohana_Exception("The user has not granted permission to post to the open graph");
+
 		if ($this->og_namespace())
 		{
 			$action = $this->og_namespace().':'.$action;
@@ -59,6 +62,9 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	{
 		if ( ! $this->initialized())
 			return NULL;
+
+		if ( ! $this->permissions('publish_stream'))
+			throw new Kohana_Exception("The user has not granted permission to publish to his stream");
 		
 		$defaults = Arr::get($this->_config, 'post', array());
 
