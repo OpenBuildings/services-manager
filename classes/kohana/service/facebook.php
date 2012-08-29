@@ -4,9 +4,9 @@
  * Facebook service adapter
  * requires 'auth' configuration array with apiId and secret
  *
- * @package    OpenBuildings/services-manager
+ * @package    Despark/services-manager
  * @author     Ivan Kerin
- * @copyright  (c) 2012 OpenBuildings Inc.
+ * @copyright  (c) 2012 Despark Ltd.
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
 abstract class Kohana_Service_Facebook extends Service implements Service_Type_Php, Service_Type_Javascript
