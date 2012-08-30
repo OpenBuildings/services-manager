@@ -29,10 +29,11 @@ abstract class Kohana_Service_Beanstalkd_Tube {
 
 	public function handle_exception(Exception $exception)
 	{
-		System_Daemon::log(System_Daemon::LOG_ERR, strtr("File: :file(:line): :message", array(
+		System_Daemon::log(System_Daemon::LOG_ERR, strtr("File: :file(:line): :message \n--\n:trace", array(
 			":file" => $exception->getFile(),
 			":line" => $exception->getLine(),
-			":message" => $exception->getMessage()
+			":message" => $exception->getMessage(),
+			":trace" => $exception->getTraceAsString(),
 		)));
 	}
 
