@@ -228,6 +228,11 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		if ( ! $this->initialized())
 			return NULL;
 
+		if (is_string($value) AND $value2 === NULL)
+		{
+			return Arr::get($this->_meta, $value);
+		}
+
 		if ($value2 !== NULL)
 		{
 			$value = array($value => $value2);
