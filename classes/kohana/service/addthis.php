@@ -89,14 +89,15 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$attributes['addthis:url'] = $url ? $url : URL::site(Request::initial()->url(), TRUE);
 		$attributes['class'] = Arr::get($attributes, 'class').' addthis_toolbox addthis_floating_style addthis_counter_style';
 
-		$attrs = HTML::attributes($attributes);		
+		$attrs = HTML::attributes($attributes);
+		$url = Service::factory('facebook')->meta('og:image');
+		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit\" pi:pinit:layout=\"vertical\"></a>" : NULL;
 		
 		return "
 			<div $attrs>
 				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
 				<a class=\"addthis_button_tweet\" tw:count=\"vertical\"></a>
-				<a class=\"addthis_button_google_plusone\" g:plusone:size=\"tall\"></a>
-				<a class=\"addthis_counter\"></a>
+				{$pin}
 			</div>";			
 	}
 	
@@ -115,14 +116,17 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$attributes['addthis:url'] = $url ? $url : URL::site(Request::initial()->url(), TRUE);
 		$attributes['class'] = Arr::get($attributes, 'class').' addthis_toolbox addthis_floating_style addthis_counter_style horizontal';
 
-		$attrs = HTML::attributes($attributes);		
+		$attrs = HTML::attributes($attributes);
+
+		$url = Service::factory('facebook')->meta('og:image');
+		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit\" pi:pinit:layout=\"vertical\"></a>" : NULL;
 		
 		return "
 			<div $attrs>
 				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
 				<a class=\"addthis_button_tweet\" tw:count=\"vertical\"></a>
-				<a class=\"addthis_button_google_plusone\" g:plusone:size=\"tall\"></a>
-			</div>";			
+				{$pin}
+			</div>";
 	}
 	
 	/**
