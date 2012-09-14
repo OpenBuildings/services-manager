@@ -112,7 +112,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		{
 			$queue_js .= "_kmq.push(".json_encode($event).");\n";
 		}
-		return $queue_js;
+		return "if(_kmq) {\n".$queue_js.";\n}";
 	}
 
 	/**
@@ -175,7 +175,6 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		{
 			$more .= "\n".View::factory($this->more);
 		}
-
 		return <<< ANALYTICS
 		<script type="text/javascript">
 			var _kmq = _kmq || [];
