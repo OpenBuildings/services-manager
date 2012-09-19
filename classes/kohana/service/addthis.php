@@ -67,10 +67,10 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$attrs = HTML::attributes($attributes);
 		return "
 			<div $attrs>
-				<a class=\"addthis_button_preferred_1\"></a>
-				<a class=\"addthis_button_preferred_2\"></a>
-				<a class=\"addthis_button_preferred_3\"></a>
-				<a class=\"addthis_button_compact\">Share</a>
+				<a class=\"addthis_button_preferred_1 km-share\"></a>
+				<a class=\"addthis_button_preferred_2 km-share\"></a>
+				<a class=\"addthis_button_preferred_3 km-share\"></a>
+				<a class=\"addthis_button_compact km-share\">Share</a>
 			</div>";				
 	}
 
@@ -91,12 +91,12 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 
 		$attrs = HTML::attributes($attributes);
 		$url = Service::factory('facebook')->meta('og:image');
-		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit\" pi:pinit:layout=\"vertical\"></a>" : NULL;
+		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit km-share\" pi:pinit:layout=\"vertical\"></a>" : NULL;
 		
 		return "
 			<div $attrs>
-				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
-				<a class=\"addthis_button_tweet\" tw:count=\"vertical\"></a>
+				<a class=\"addthis_button_facebook_like km-share\" fb:like:layout=\"box_count\"></a>
+				<a class=\"addthis_button_tweet km-share\" tw:count=\"vertical\"></a>
 				{$pin}
 			</div>";			
 	}
@@ -119,12 +119,12 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$attrs = HTML::attributes($attributes);
 
 		$url = Service::factory('facebook')->meta('og:image');
-		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit\" pi:pinit:layout=\"vertical\"></a>" : NULL;
+		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit km-share\" pi:pinit:layout=\"vertical\"></a>" : NULL;
 		
 		return "
 			<div $attrs>
-				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
-				<a class=\"addthis_button_tweet\" tw:count=\"vertical\"></a>
+				<a class=\"addthis_button_facebook_like km-share\" fb:like:layout=\"box_count\"></a>
+				<a class=\"addthis_button_tweet km-share\" tw:count=\"vertical\"></a>
 				{$pin}
 			</div>";
 	}
