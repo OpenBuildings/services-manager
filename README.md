@@ -107,6 +107,7 @@ __Configuraitons__:
 * __enabled__ : (bool)
 * __disabled-for-role__ : (string)
 * __enabled-for-role__ : (string)
+* __notifications-for-role__ : (string) this is used to replace kissmetrics events with HTML5 notifications so that you can clearly see which events get triggered and when, without going to kissmetrics service at all
 * __api-file__ : (string) the file for kissinsights - they don't have api keys yet, but the filename is unique
 
 

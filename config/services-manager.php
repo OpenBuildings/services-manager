@@ -13,6 +13,7 @@ return array(
 		// 	'use-auth' => TRUE,
 		// 	'php-api' => TRUE,
 		// 	'more' => ""
+		// 	'notifications-for-role' => TRUE 
 		// ),
 		// 'kissinsights' => array(
 		// 	'api-file' => '',
