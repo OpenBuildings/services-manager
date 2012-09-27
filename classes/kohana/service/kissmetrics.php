@@ -153,6 +153,11 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		return NULL;
 	}
 
+	public function enabled_for_user()
+	{	
+		return ($this->notifications_for_user() OR parent::enabled_for_user());
+	}
+
 	public function notifications_for_user()
 	{
 		if ($role = Arr::get($this->_config, 'notifications-for-role'))
@@ -220,6 +225,11 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 					_kmq.push = function(item) {
 						if (item[0] === 'trackClick' || item[0] === 'trackClickOnOutboundLink') {
 							$('body').on('click', item[1].charAt(0) === '.' ? item[1] : '#' + item[1], function(event){
+								kissmetrics_notification(item[2])
+							});
+						}
+						else if (item[0] === 'trackSubmit') {
+							$('body').on('submit', item[1].charAt(0) === '.' ? item[1] : '#' + item[1], function(event){
 								kissmetrics_notification(item[2])
 							});
 						}
