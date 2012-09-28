@@ -81,14 +81,52 @@ class Kohana_Service
 	}
 
 	/**
-	 * Getter / setter for config. If you pass an array, merges it with the current configuraton
+	 * View::capture clone as it is a protected kohana method
+	 * @param  string $file      the file to render the contents of
+	 * @param  array $variables array of varaiables to be included as local
+	 * @return string            the rendered file
+	 */
+	public function render_file($file, array $variables = array())
+	{
+		// Import the view variables to local namespace
+		extract($variables, EXTR_SKIP);
+
+		// Capture the view output
+		ob_start();
+
+		try
+		{
+			// Load the view within the current scope
+			include $file;
+		}
+		catch (Exception $e)
+		{
+			// Delete the output buffer
+			ob_end_clean();
+
+			// Re-throw the exception
+			throw $e;
+		}
+
+		// Get the captured output and close the buffer
+		return ob_get_clean();
+	}
+
+	/**
+	 * Getter / setter for config. 
+	 * If you pass an array, merges it with the current configuraton
+	 * If you pass a string returns the config with the specified key
 	 * 
 	 * @param  [type] $config [description]
 	 * @return [type]
 	 */
 	public function config($config = NULL)
 	{
-		if ($config !== NULL)
+		if (is_string($config))
+		{
+			return Arr::get($this->_config, $config);
+		}
+		elseif ($config !== NULL)
 		{
 			$this->_config = Arr::merge($this->_config, (array) $config);
 			return $this;
@@ -116,7 +154,7 @@ class Kohana_Service
 	/**
 	 * Check if the service has been initialized, and if not, run init(), return FALSE if disabled
 	 * 
-	 * @return [type]
+	 * @return bool
 	 */
 	public function initialized()
 	{
@@ -125,7 +163,7 @@ class Kohana_Service
 
 		if ($this->_enabled)
 		{
-			if ( ! $this->enabled_for_user())
+			if ( ! $this->is_enabled_for_user())
 			{
 				$this->_enabled = FALSE;
 				
@@ -141,7 +179,7 @@ class Kohana_Service
 		return FALSE;
 	}
 
-	public function enabled_for_user()
+	public function is_enabled_for_user()
 	{
 		if ($role = Arr::get($this->_config, 'disabled-for-role'))
 		{

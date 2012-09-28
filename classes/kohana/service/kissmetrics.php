@@ -11,9 +11,6 @@
  */
 abstract class Kohana_Service_Kissmetrics extends Service implements Service_Type_Javascript, Service_Type_Php
 {
-	public $api_key;
-	public $php_api;
-	public $more = '';
 	public $queue = array();
 
 	/**
@@ -24,7 +21,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function record($action, $props = array())
 	{
-		if ($this->initialized() AND $this->php_api)
+		if ($this->initialized() AND $this->config('php-api'))
 		{
 			KM::record($action, $props);
 		}
@@ -39,7 +36,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function set($params_array)
 	{
-		if ($this->initialized() AND $this->php_api)
+		if ($this->initialized() AND $this->config('php-api'))
 		{
 			KM::set($params_array);
 		}
@@ -54,7 +51,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function identify($identifier)
 	{
-		if ($this->initialized() AND $this->php_api)
+		if ($this->initialized() AND $this->config('php-api'))
 		{
 			KM::identify($identifier);
 		}
@@ -121,31 +118,21 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	 */
 	public function init()
 	{
-		$this->api_key = Arr::get($this->_config, 'api-key');
-		$this->php_api = Arr::get($this->_config, 'php-api');
-		$this->more = Arr::get($this->_config, 'more');
-
-		if ($this->php_api)
+		if ($this->config('php-api'))
 		{
 			require_once Kohana::find_file('vendor', 'km');
 
-			KM::init($this->api_key);
+			KM::init($this->config('api-key'));
 
-			if (isset($_COOKIE['km_ni']))
+			if ($ids = array_filter(Arr::extract($_COOKIE, array('km_ni', 'km_ai'))))
 			{
-				// Visitor has a JS set named kiss metrics identity.
-				KM::identify($_COOKIE['km_ni']);
-			}
-			elseif (isset($_COOKIE['km_ai']))
-			{
-				// Visitor has a JS set named kiss metrics identity.
-				KM::identify($_COOKIE['km_ai']);
+				KM::identify(reset($ids));
 			}
 		}
 	}
 
 	/**
-	 * Render the head script tags
+	 * Render the head script tags (EMPTY)
 	 * @return string
 	 */
 	public function head()
@@ -153,14 +140,23 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		return NULL;
 	}
 
-	public function enabled_for_user()
+	/**
+	 * Extend the normal is_enabled_for_user method to allow showing notifications even for roles
+	 * that have kissmetrics disabled
+	 * @return bool 
+	 */
+	public function is_enabled_for_user()
 	{	
-		return ($this->notifications_for_user() OR parent::enabled_for_user());
+		return ($this->has_notifications_for_user() OR parent::is_enabled_for_user());
 	}
 
-	public function notifications_for_user()
+	/**
+	 * See if the current user has notifications enabled for him
+	 * @return bool
+	 */
+	public function has_notifications_for_user()
 	{
-		if ($role = Arr::get($this->_config, 'notifications-for-role'))
+		if ($role = $this->config('notifications-for-role'))
 		{
 			return Auth::instance()->logged_in($role);
 		}
@@ -169,7 +165,7 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 	}
 
 	/**
-	 * Render the body tags (EMPTY)
+	 * Render the body tags
 	 * @return NULL
 	 */
 	public function body()
@@ -177,93 +173,29 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		if ( ! $this->initialized())
 			return NULL;
 
-		if (Arr::get($this->_config, 'use-auth') AND Auth::instance()->logged_in())
+		if ($this->config('use-auth') AND Auth::instance()->logged_in())
 		{
 			if ( ! isset($_COOKIE['km_ni']))
 			{
 				$this->queue[] = array('identify', Auth::instance()->get_user()->email);
 			}
 		}
-		$more = $this->render_queue($this->queue);
+		$events_queue = $this->render_queue($this->queue);
 
-		if ($this->more)
+		if ($more = $this->config('more'))
 		{
-			$more .= "\n".View::factory($this->more);
+			$events_queue .= "\n".View::factory($more);
 		}
 
-		if ($this->notifications_for_user())
+		if ($this->has_notifications_for_user())
 		{
-			return <<<ANALYTICS_NOTIFICATIONS
-			<script type="text/javascript">
-				var _kmq = _kmq || [];
-				if (window.webkitNotifications && window.jQuery)
-				{
-					window.jQuery('<div style="position:fixed; z-index:100000; bottom: 5px; left: 5px; width: 40px; height: 25px;"><button class="cl-button small default">KM '+(sessionStorage.getItem("_km_notifications") || 'off')+'</button>')
-						.appendTo('body')
-						.find('button')
-							.click(function(){
-								if (sessionStorage.getItem("_km_notifications") === 'on')
-								{
-									sessionStorage.setItem("_km_notifications", 'off');
-								}
-								else
-								{
-									window.webkitNotifications.requestPermission();
-									sessionStorage.setItem("_km_notifications", 'on');
-								}
-								window.jQuery(this).text('KM '+sessionStorage.getItem("_km_notifications"));
-							});
-
-					var kissmetrics_notification = function(text) {
-						if (sessionStorage.getItem("_km_notifications") === 'on')
-						{
-							var notification = window.webkitNotifications.createNotification('http://www.quickonlinetips.com/archives/wp-content/uploads/kissmetrics-logo.png', 'Kissmetrics Event', text);
-							notification.show();
-						}
-					}
-
-					_kmq.push = function(item) {
-						if (item[0] === 'trackClick' || item[0] === 'trackClickOnOutboundLink') {
-							$('body').on('click', item[1].charAt(0) === '.' ? item[1] : '#' + item[1], function(event){
-								kissmetrics_notification(item[2])
-							});
-						}
-						else if (item[0] === 'trackSubmit') {
-							$('body').on('submit', item[1].charAt(0) === '.' ? item[1] : '#' + item[1], function(event){
-								kissmetrics_notification(item[2])
-							});
-						}
-						else if(item[0] === 'record')
-						{
-							kissmetrics_notification(item[1])
-						}
-						return Array.prototype.push.apply(this, arguments);
-					}
-				}
-
-				{$more}
-			</script>
-ANALYTICS_NOTIFICATIONS;
+			$js = Service::render_file(Kohana::find_file('web/js', 'kissmetrics-notifications', 'js'));
 		}
 		else
 		{
-			return <<< ANALYTICS
-			<script type="text/javascript">
-				var _kmq = _kmq || [];
-
-				function _kms(u){
-				  setTimeout(function(){
-				  var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
-				  s.src = u; f.parentNode.insertBefore(s, f);
-				  }, 1);
-				}
-
-				_kms('//i.kissmetrics.com/i.js');
-				_kms('//doug1izaerwt3.cloudfront.net/{$this->api_key}.1.js');
-
-				{$more}
-			</script>
-ANALYTICS;
+			$js = Service::render_file(Kohana::find_file('web/js', 'kissmetrics-init', 'js'), array('api_key' => $this->config('api-key')));	
 		}
+
+		return "<script type=\"text/javascript\">\n{$js}\n{$events_queue}\n</script>";
 	}
 }
