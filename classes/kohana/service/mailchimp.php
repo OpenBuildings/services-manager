@@ -31,12 +31,14 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 			$args[0] = Arr::path($this->_config, 'lists.'.$args[0], $args[0]);
 		}
 
-		call_user_func_array(array($this->_api, $method), $args);
+		$return = call_user_func_array(array($this->_api, $method), $args);
 		
 		if ($this->_api->errorCode)
 		{
-			throw new Service_Mailchimp_Excepction($this->_api->errorMessage, NULL, $this->_api->errorCode);
+			throw new Service_Mailchimp_Exception($this->_api->errorMessage, NULL, $this->_api->errorCode);
 		}
+
+		return $return;
 	}
 
 	/**
