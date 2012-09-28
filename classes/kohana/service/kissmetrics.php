@@ -153,6 +153,21 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		return NULL;
 	}
 
+	public function enabled_for_user()
+	{	
+		return ($this->notifications_for_user() OR parent::enabled_for_user());
+	}
+
+	public function notifications_for_user()
+	{
+		if ($role = Arr::get($this->_config, 'notifications-for-role'))
+		{
+			return Auth::instance()->logged_in($role);
+		}
+		
+		return FALSE;
+	}
+
 	/**
 	 * Render the body tags (EMPTY)
 	 * @return NULL
@@ -175,22 +190,80 @@ abstract class Kohana_Service_Kissmetrics extends Service implements Service_Typ
 		{
 			$more .= "\n".View::factory($this->more);
 		}
-		return <<< ANALYTICS
-		<script type="text/javascript">
-			var _kmq = _kmq || [];
 
-			function _kms(u){
-			  setTimeout(function(){
-			  var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
-			  s.src = u; f.parentNode.insertBefore(s, f);
-			  }, 1);
-			}
+		if ($this->notifications_for_user())
+		{
+			return <<<ANALYTICS_NOTIFICATIONS
+			<script type="text/javascript">
+				var _kmq = _kmq || [];
+				if (window.webkitNotifications && window.jQuery)
+				{
+					window.jQuery('<div style="position:fixed; z-index:100000; bottom: 5px; left: 5px; width: 40px; height: 25px;"><button class="cl-button small default">KM '+(sessionStorage.getItem("_km_notifications") || 'off')+'</button>')
+						.appendTo('body')
+						.find('button')
+							.click(function(){
+								if (sessionStorage.getItem("_km_notifications") === 'on')
+								{
+									sessionStorage.setItem("_km_notifications", 'off');
+								}
+								else
+								{
+									window.webkitNotifications.requestPermission();
+									sessionStorage.setItem("_km_notifications", 'on');
+								}
+								window.jQuery(this).text('KM '+sessionStorage.getItem("_km_notifications"));
+							});
 
-			_kms('//i.kissmetrics.com/i.js');
-			_kms('//doug1izaerwt3.cloudfront.net/{$this->api_key}.1.js');
+					var kissmetrics_notification = function(text) {
+						if (sessionStorage.getItem("_km_notifications") === 'on')
+						{
+							var notification = window.webkitNotifications.createNotification('http://www.quickonlinetips.com/archives/wp-content/uploads/kissmetrics-logo.png', 'Kissmetrics Event', text);
+							notification.show();
+						}
+					}
 
-			{$more}
-		</script>
+					_kmq.push = function(item) {
+						if (item[0] === 'trackClick' || item[0] === 'trackClickOnOutboundLink') {
+							$('body').on('click', item[1].charAt(0) === '.' ? item[1] : '#' + item[1], function(event){
+								kissmetrics_notification(item[2])
+							});
+						}
+						else if (item[0] === 'trackSubmit') {
+							$('body').on('submit', item[1].charAt(0) === '.' ? item[1] : '#' + item[1], function(event){
+								kissmetrics_notification(item[2])
+							});
+						}
+						else if(item[0] === 'record')
+						{
+							kissmetrics_notification(item[1])
+						}
+						return Array.prototype.push.apply(this, arguments);
+					}
+				}
+
+				{$more}
+			</script>
+ANALYTICS_NOTIFICATIONS;
+		}
+		else
+		{
+			return <<< ANALYTICS
+			<script type="text/javascript">
+				var _kmq = _kmq || [];
+
+				function _kms(u){
+				  setTimeout(function(){
+				  var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
+				  s.src = u; f.parentNode.insertBefore(s, f);
+				  }, 1);
+				}
+
+				_kms('//i.kissmetrics.com/i.js');
+				_kms('//doug1izaerwt3.cloudfront.net/{$this->api_key}.1.js');
+
+				{$more}
+			</script>
 ANALYTICS;
+		}
 	}
 }
