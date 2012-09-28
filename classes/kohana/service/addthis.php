@@ -91,7 +91,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 
 		$attrs = HTML::attributes($attributes);
 		$url = Service::factory('facebook')->meta('og:image');
-		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit km-share\" pi:pinit:layout=\"vertical\"></a>" : NULL;
+		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" pi:pinit:url=\"{$attributes['addthis:url']}\" class=\"addthis_button_pinterest_pinit km-share\" pi:pinit:layout=\"vertical\"></a>" : NULL;
 		
 		return "
 			<div $attrs>
@@ -119,7 +119,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$attrs = HTML::attributes($attributes);
 
 		$url = Service::factory('facebook')->meta('og:image');
-		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" class=\"addthis_button_pinterest_pinit km-share\" pi:pinit:layout=\"vertical\"></a>" : NULL;
+		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" pi:pinit:url=\"{$attributes['addthis:url']}\" class=\"addthis_button_pinterest_pinit km-share\" pi:pinit:layout=\"vertical\"></a>" : NULL;
 		
 		return "
 			<div $attrs>
