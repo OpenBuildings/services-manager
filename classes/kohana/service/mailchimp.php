@@ -26,7 +26,7 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 		if ( ! $this->initialized())
 			return NULL;
 		
-		if (strpos($method, 'list') !== FALSE AND strpos($method, 'lists') === FALSE)
+		if (strpos($method, 'listSubscribe') !== FALSE OR strpos($method, 'listUnsubscribe'))
 		{
 			$args[0] = Arr::path($this->_config, 'lists.'.$args[0], $args[0]);
 		}
