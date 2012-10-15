@@ -22,7 +22,8 @@ return array(
 		// 'googleanalytics' => array(
 		// 	'api-key' => '',
 		// 	'enabled' => TRUE,
-		// 	'header' => TRUE
+		// 	'in_header' => TRUE
+		// 	'project_id' => ''
 		// ),
 		// 'addthis' => array(
 		// 	'enabled' => TRUE,

@@ -11,21 +11,46 @@
  */
 abstract class Kohana_Service_Googleanalytics extends Service implements Service_Type_Javascript
 {
-	public $api_key;
-	public $header;
+	protected $_access_token;
 
 	public function init()
 	{
-		$this->api_key = Arr::get($this->_config, 'api-key');
-		$this->header = Arr::get($this->_config, 'header');
 	}
 
-	public function header()
+	public function access_token()
 	{
 		if ( ! $this->initialized())
 			return NULL;
 
-		return $this->header;
+		if ( ! $this->_access_token)
+		{
+			if (count($missing_keys = array_diff(array('refresh_token', 'client_id', 'client_secret'), array_keys($this->config()))))
+				throw new Kohana_Exception('Must set :keys for googleanalytics service configuration', array(':keys' => join(', ', $missing_keys)));
+
+			require_once Kohana::find_file("vendor", "googleoauth");
+
+			$auth = new GoogleOAuth($this->config('client_id'), $this->config('client_secret'));
+			
+			$this->_access_token = $auth->obtain_access_token($this->config('refresh_token'));
+		}
+
+		return $this->_access_token;
+	}
+
+	public function report($metrics = NULL)
+	{
+		if ( ! $this->initialized())
+			return NULL;
+
+		if ( ! $this->config('refresh_token'))
+			throw new Kohana_Exception('Must set refresh_token for googleanalytics service configuration');
+
+		$report = new Service_Googleanalytics_Report($this->config('project_id'), $this->access_token());
+		if ($metrics)
+		{
+			$report->metrics($metrics);
+		}
+		return $report;
 	}
 
 	/**
@@ -34,13 +59,13 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	 */
 	public function code()
 	{
-		if ( ! $this->initialized())
+		if ( ! $this->initialized() AND $api_key = $this->config('api-key'))
 			return NULL;
 
 		return <<<ANALYTICS
 <script type="text/javascript">
 	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', '{$this->api_key}']);
+	_gaq.push(['_setAccount', '{$api_key}']);
 	_gaq.push(['_trackPageview']);
 	(function() {
 	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -53,11 +78,11 @@ ANALYTICS;
 
 	public function head()
 	{
-		return $this->header() ? $this->code() : NULL;
+		return $this->config('in_header') ? $this->code() : NULL;
 	}
 
 	public function body()
 	{
-		return $this->header() ? NULL : $this->code();
+		return $this->config('in_header') ? NULL : $this->code();
 	}
 }
