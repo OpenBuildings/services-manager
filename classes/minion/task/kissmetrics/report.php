@@ -1,7 +1,11 @@
-<?php 
-
-defined('SYSPATH') or die('No direct script access.');
-
+<?php defined('SYSPATH') or die('No direct script access.');
+/**
+ * Get a report for kissmetrics events
+ * 
+ * @param string event the name of the event
+ * @param string start_date the starting date, any strtotime format, defaults to yesterday
+ * @param string end_date the end of the range date, any strtotime format, defaults to today
+ */
 class Minion_Task_Kissmetrics_Report extends Minion_Task 
 {
 	protected $_config = array(
