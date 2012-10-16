@@ -11,17 +11,34 @@ abstract class Kohana_Service_KissMetrics_Report
 	}
 
 	protected $_event;
+	protected $_properties = array();
 	protected $_start_date;
 	protected $_end_date;
 	protected $_database;
 	
 	public function total()
 	{
-		return DB::select()
+		$select = DB::select()
 			->from('events')
-			->select(array(DB::expr('COUNT(DISTINCT user)'), 'count'))
-			->where('name', '=', $this->event())
-			->where('moment', 'BETWEEN', array($this->start_date(), $this->end_date()))
+			->select(array(DB::expr('COUNT(DISTINCT events.user)'), 'count'))
+			->where('events.name', '=', $this->event())
+			->where('events.moment', 'BETWEEN', array($this->start_date(), $this->end_date()));
+
+		if ($this->properties())
+		{
+			$select
+				->join('properties')
+				->on('events.user', '=', 'properties.user');
+
+			foreach ($this->properties() as $property => $value) 
+			{
+				$select
+					->on('properties.name', '=', DB::expr("'$property'"))
+					->on('properties.value', '=', DB::expr("'$value'"));
+			}
+		}
+
+		return $select
 			->execute($this->database())
 			->get('count');
 	}
@@ -69,6 +86,27 @@ abstract class Kohana_Service_KissMetrics_Report
 		}
 		return $this->_end_date;
 	}
+
+	public function properties($key = NULL, $value = NULL)
+	{
+		if ($key === NULL)
+			return $this->_properties;
+	
+		if (is_array($key))
+		{
+			$this->_properties = $key;
+		}
+		else
+		{
+			if ($value === NULL)
+				return Arr::get($this->_properties, $key);
+	
+			$this->_properties[$key] = $value;
+		}
+	
+		return $this;
+	}
+
 	
 }
 

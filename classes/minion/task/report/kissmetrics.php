@@ -3,6 +3,7 @@
  * Get a report for kissmetrics events
  * 
  * @param string event the name of the event
+ * @param string properties limit events based on user property. e.g. --properties="type=professional&test=test"
  * @param string start_date the starting date, any strtotime format, defaults to yesterday
  * @param string end_date the end of the range date, any strtotime format, defaults to today
  */
@@ -12,27 +13,29 @@ class Minion_Task_Report_Kissmetrics extends Minion_Task
 		'event' => FALSE, 
 		'start_date' => 'yesterday', 
 		'end_date' => 'today',
+		'properties' => '',
 	);
 
 	public function build_validation(Validation $validation)
 	{
 		return parent::build_validation($validation)
 			->rule('event', 'not_empty')
+			->rule('properties', 'json_decode')
 			->rule('start_date', 'strtotime') 
 			->rule('end_date', 'strtotime'); 
 	}
 
 	public function execute(array $options)
 	{
+		parse_str($options['properties'], $options['properties']);
 		$report = Service::factory('kissmetrics')->report();
-
 		$report_params = array();
 		foreach ($options as $key => $value) 
 		{
 			if ($value)
 			{
 				$report->$key($value);
-				$report_params[] = "$key: $value";
+				$report_params[] = "$key: ".(is_array($value) ? join(', ', $value) : $value);
 			}
 		}
 
