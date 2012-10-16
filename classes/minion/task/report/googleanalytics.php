@@ -16,7 +16,7 @@ defined('SYSPATH') or die('No direct script access.');
  * @param string segment segment
  * 
  */
-class Minion_Task_GoogleAnalytics_Report extends Minion_Task 
+class Minion_Task_Report_GoogleAnalytics extends Minion_Task 
 {
 	protected $_config = array(
 		'metrics' => FALSE,

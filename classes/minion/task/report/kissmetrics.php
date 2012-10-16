@@ -6,7 +6,7 @@
  * @param string start_date the starting date, any strtotime format, defaults to yesterday
  * @param string end_date the end of the range date, any strtotime format, defaults to today
  */
-class Minion_Task_Kissmetrics_Report extends Minion_Task 
+class Minion_Task_Report_Kissmetrics extends Minion_Task 
 {
 	protected $_config = array(
 		'event' => FALSE, 
