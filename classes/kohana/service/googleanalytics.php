@@ -59,7 +59,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	 */
 	public function code()
 	{
-		if ( ! $this->initialized() AND $api_key = $this->config('api-key'))
+		if ( ! $this->initialized() OR ! $api_key = $this->config('api-key'))
 			return NULL;
 
 		return <<<ANALYTICS
