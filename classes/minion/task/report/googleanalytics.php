@@ -27,6 +27,7 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 		'dimensions' => FALSE,
 		'filters' => FALSE,
 		'segment' => FALSE,
+		'result' => 'total',
 		'start_index' => FALSE,
 	);
 
@@ -37,6 +38,7 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 			->rule('start_date', 'strtotime') 
 			->rule('end_date', 'strtotime')
 			->rule('start_index', 'digit')
+			->rule('result', "in_array", array(':value', array('total', 'rows')))
 			->rule('max_results', 'digit'); 
 	}
 
@@ -44,6 +46,9 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 	{
 		$options['start_date'] = date('Y-m-d', strtotime($options['start_date']));
 		$options['end_date'] = date('Y-m-d', strtotime($options['end_date']));
+
+		$result = $options['result'];
+		unset($options['result']);
 
 		$report = Service::factory('googleanalytics')->report();
 
@@ -57,7 +62,15 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 			}
 		}
 
-		Minion_CLI::write('Total: '.$report->total().' For '.join(', ', $report_params));
+		switch ($result) 
+		{
+			case 'total':
+				Minion_CLI::write('Total: '.$report->total().' For '.join(', ', $report_params));
+			break;
+			case 'rows':
+				Minion_CLI::write('For '.join(', ', $report_params).' Rows: '.print_r($report->rows(), TRUE));
+			break;
+		}
 	}
 }
 
