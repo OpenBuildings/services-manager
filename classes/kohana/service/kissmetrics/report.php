@@ -37,7 +37,7 @@ abstract class Kohana_Service_KissMetrics_Report
 					->on('properties.value', '=', DB::expr("'$value'"));
 			}
 		}
-
+		
 		return $select
 			->execute($this->database())
 			->get('count');
@@ -70,7 +70,7 @@ abstract class Kohana_Service_KissMetrics_Report
 	{
 		if ($start_date !== NULL)
 		{
-			$this->_start_date = date('Y-m-d', (is_numeric($start_date) ? $start_date : strtotime($start_date)));
+			$this->_start_date = date('Y-m-d H:i:s', (is_numeric($start_date) ? $start_date : strtotime($start_date)));
 			return $this;
 		}
 
@@ -81,7 +81,7 @@ abstract class Kohana_Service_KissMetrics_Report
 	{
 		if ($end_date !== NULL)
 		{
-			$this->_end_date = date('Y-m-d', (is_numeric($end_date) ? $end_date : strtotime($end_date)));
+			$this->_end_date = date('Y-m-d H:i:s', (is_numeric($end_date) ? $end_date : strtotime($end_date)));
 			return $this;
 		}
 		return $this->_end_date;
