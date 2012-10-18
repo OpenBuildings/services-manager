@@ -73,8 +73,8 @@ class GoogleAnalytics_ReportTest extends Unittest_TestCase
 		$expected_params = array(
 			'ids' => 'ga:54199329',
 			'access_token' => 'ya29.AHES6ZTqsrcU7TfWCTwoc8II51FTD3tSfiwUXHhosWPK_uhfEQ',
-			'start-date' => '2012-10-08',
-			'end-date' => '2012-10-14',
+			'start-date' => date('Y-m-d', strtotime('1 week ago')),
+			'end-date' => date('Y-m-d', strtotime('yesterday')),
 			'metrics' => 'ga:entrances',
 			'dimensions' => 'ga:landingPagePath',
 			'max-results' => '5',
