@@ -62,8 +62,11 @@ class Minion_Task_Kissmetrics_Import extends Minion_Task
 
 		foreach ($paths as $path)
 		{
-			if ( ! preg_match('/\d{4}\/[a-zA-Z]{3}\/\d{4}-\d{2}-\d{2}.json/', $path))
-				continue;
+			if ( ! preg_match('/revisions\/\d+.json/', $path))
+			{
+				Minion_CLI::write($path, 'yellow');
+				continue;				
+			}
 
 			if (in_array($path, $loaded_paths))
 			{
