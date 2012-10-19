@@ -7,7 +7,7 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 {
 	const URL = 'https://www.googleapis.com/analytics/v3/data/ga';
 
-	public static function factory($metrics)
+	public static function factory($metrics = NULL)
 	{
 		return new Service_GoogleAnalytics_Report($metrics);
 	}
@@ -49,7 +49,7 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 
 	public function rows()
 	{
-		return Arr::get($this->retrieve(), 'rows');
+		return (array) Arr::get($this->retrieve(), 'rows');
 	}
 
 	public function total()
@@ -57,7 +57,7 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 		return Arr::path($this->retrieve(), 'totalsForAllResults.'.$this->_metrics);
 	}
 
-	function __construct($metrics)
+	function __construct($metrics = NULL)
 	{
 		$this->_project_id = Service::factory('googleanalytics')->config('project_id');
 		$this->_access_token = Service::factory('googleanalytics')->access_token();
