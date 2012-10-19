@@ -19,8 +19,8 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 
 	public function access_token()
 	{
-		if ( ! $this->initialized())
-			return NULL;
+		// if ( ! $this->initialized())
+		// 	return NULL;
 
 		if ( ! $this->_access_token)
 		{
