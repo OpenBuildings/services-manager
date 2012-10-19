@@ -7,9 +7,9 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 {
 	const URL = 'https://www.googleapis.com/analytics/v3/data/ga';
 
-	public static function factory($project_id, $access_token)
+	public static function factory($metrics)
 	{
-		return new Service_GoogleAnalytics_Report($project_id, $access_token);
+		return new Service_GoogleAnalytics_Report($metrics);
 	}
 
 	protected $_metrics;
@@ -57,12 +57,12 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 		return Arr::path($this->retrieve(), 'totalsForAllResults.'.$this->_metrics);
 	}
 
-	function __construct($project_id, $access_token)
+	function __construct($metrics)
 	{
-		$this->_project_id = $project_id;
-		$this->_access_token = $access_token;
+		$this->_project_id = Service::factory('googleanalytics')->config('project_id');
+		$this->_access_token = Service::factory('googleanalytics')->access_token();
+		$this->metrics($metrics);
 		$this
-			->metrics('ga:visits')
 			->start_date('1 month ago')
 			->end_date('today');
 	}

@@ -37,22 +37,6 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 		return $this->_access_token;
 	}
 
-	public function report($metrics = NULL)
-	{
-		if ( ! $this->initialized())
-			return NULL;
-
-		if ( ! $this->config('refresh_token'))
-			throw new Kohana_Exception('Must set refresh_token for googleanalytics service configuration');
-
-		$report = new Service_Googleanalytics_Report($this->config('project_id'), $this->access_token());
-		if ($metrics)
-		{
-			$report->metrics($metrics);
-		}
-		return $report;
-	}
-
 	/**
 	 * Render the required code
 	 * @return string

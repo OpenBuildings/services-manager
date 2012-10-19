@@ -11,14 +11,6 @@
  */
 abstract class Kohana_Service_Kissmetrics extends Service implements Service_Type_Javascript, Service_Type_Php
 {
-	public function report($event = NULL)
-	{
-		if ( ! $this->initialized())
-			return NULL;
-
-		return new Service_Kissmetrics_Report($event);
-	}
-
 	public $queue = array();
 
 	/**
