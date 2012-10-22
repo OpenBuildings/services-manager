@@ -50,7 +50,7 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 		$result = $options['result'];
 		unset($options['result']);
 
-		$report = Service_Googleanalytics_Report::factory();
+		$report = Report::factory('googleanalytics');
 
 		$report_params = array();
 		foreach ($options as $key => $value) 

@@ -28,7 +28,7 @@ class Minion_Task_Report_Kissmetrics extends Minion_Task
 	public function execute(array $options)
 	{
 		parse_str($options['properties'], $options['properties']);
-		$report = Service_Kissmetrics_Report::factory();
+		$report = Report::factory('kissmetrics');
 		$report_params = array();
 		foreach ($options as $key => $value) 
 		{
@@ -38,7 +38,6 @@ class Minion_Task_Report_Kissmetrics extends Minion_Task
 				$report_params[] = "$key: ".(is_array($value) ? join(', ', $value) : $value);
 			}
 		}
-
 		Minion_CLI::write('Total: '.$report->total().' For '.join(', ', $report_params));
 	}
 }

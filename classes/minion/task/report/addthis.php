@@ -25,7 +25,7 @@ class Minion_Task_Report_Addthis extends Minion_Task
 
 	public function execute(array $options)
 	{
-		$report = Service_Addthis_Report::factory();
+		$report = Report::factory('addthis');
 		$report_params = array();
 		foreach ($options as $key => $value) 
 		{

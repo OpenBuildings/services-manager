@@ -3,27 +3,12 @@
 /**
  * Local database reporting
  */
-class Kohana_Service_Addthis_Report
+class Kohana_Report_Addthis extends Report
 {
-	public static function factory($metric = NULL)
-	{
-		return new Service_Addthis_Report($metric);
-	}
-
-	protected $_start_date;
-	protected $_end_date;
 	protected $_metric;
 	protected $_data;
+	protected $_date_template = 'Y-m-d';
 	
-	function __construct($metric = NULL)
-	{
-		$this->metric($metric);
-		$this
-			->start_date('1 month ago')
-			->end_date('today');
-	}
-
-
 	public function metric($metric = NULL)
 	{
 		if ($metric !== NULL)
@@ -40,8 +25,8 @@ class Kohana_Service_Addthis_Report
 	{
 		if ($this->_data === NULL)
 		{
-			$config = Kohana::$config->load('services-manager.services.addthis');
-			$pubid = Arr::get($config, 'api-key');
+			$config = Kohana::$config->load('services-manager.reports.addthis');
+			$pubid = Arr::get($config, 'pubid');
 			$curl = curl_init();
 			curl_setopt_array($curl, array(
 				CURLOPT_USERPWD => join(':', Arr::extract($config, array('username', 'password'))),
@@ -70,28 +55,5 @@ class Kohana_Service_Addthis_Report
 
 		return $total;
 	}
-
-
-	public function start_date($start_date = NULL)
-	{
-		if ($start_date !== NULL)
-		{
-			$this->_start_date = date('Y-m-d', (is_numeric($start_date) ? $start_date : strtotime($start_date)));
-			return $this;
-		}
-
-		return $this->_start_date;
-	}
-	
-	public function end_date($end_date = NULL)
-	{
-		if ($end_date !== NULL)
-		{
-			$this->_end_date = date('Y-m-d', (is_numeric($end_date) ? $end_date : strtotime($end_date)));
-			return $this;
-		}
-		return $this->_end_date;
-	}
-	
 }
 

@@ -17,25 +17,6 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	{
 	}
 
-	public function access_token()
-	{
-		// if ( ! $this->initialized())
-		// 	return NULL;
-
-		if ( ! $this->_access_token)
-		{
-			if (count($missing_keys = array_diff(array('refresh_token', 'client_id', 'client_secret'), array_keys($this->config()))))
-				throw new Kohana_Exception('Must set :keys for googleanalytics service configuration', array(':keys' => join(', ', $missing_keys)));
-
-			require_once Kohana::find_file("vendor", "googleoauth");
-
-			$auth = new GoogleOAuth($this->config('client_id'), $this->config('client_secret'));
-			
-			$this->_access_token = $auth->obtain_access_token($this->config('refresh_token'));
-		}
-
-		return $this->_access_token;
-	}
 
 	/**
 	 * Render the required code

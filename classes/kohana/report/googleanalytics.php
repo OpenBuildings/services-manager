@@ -1,20 +1,13 @@
 <?php
 
 /**
- * Google analytics reporting
+ * Local database reporting
  */
-abstract class Kohana_Service_GoogleAnalytics_Report
+class Kohana_Report_GoogleAnalytics extends Report
 {
 	const URL = 'https://www.googleapis.com/analytics/v3/data/ga';
 
-	public static function factory($metrics = NULL)
-	{
-		return new Service_GoogleAnalytics_Report($metrics);
-	}
-
 	protected $_metrics;
-	protected $_start_date;
-	protected $_end_date;
 	protected $_sort;
 	protected $_max_results;
 	protected $_dimensions;
@@ -23,6 +16,7 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 	protected $_filters;
 	protected $_segment;
 	protected $_start_index;
+	protected $_date_template = 'Y-m-d';
 	
 	public function request_params()
 	{
@@ -42,9 +36,33 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 		return array_filter($data);
 	}
 
+	public function project_id()
+	{
+		return Kohana::$config->load('services-manager.reports.googleanalytics.project_id');
+	}
+
+	public function access_token()
+	{
+		if ( ! $this->_access_token)
+		{
+			$config = Kohana::$config->load('services-manager.reports.googleanalytics');
+
+			if (count($missing_keys = array_diff(array('refresh_token', 'client_id', 'client_secret'), array_keys($config))))
+				throw new Kohana_Exception('Must set :keys for googleanalytics service configuration', array(':keys' => join(', ', $missing_keys)));
+
+			require_once Kohana::find_file("vendor", "googleoauth");
+
+			$auth = new GoogleOAuth($config['client_id'], $config['client_secret']);
+			
+			$this->_access_token = $auth->obtain_access_token($config['refresh_token']);
+		}
+
+		return $this->_access_token;
+	}
+
 	public function retrieve()
 	{
-		return json_decode(@file_get_contents(Service_GoogleAnalytics_Report::URL.'?'.http_build_query($this->request_params())), TRUE);
+		return json_decode(@file_get_contents(Report_GoogleAnalytics::URL.'?'.http_build_query($this->request_params())), TRUE);
 	}
 
 	public function rows()
@@ -54,19 +72,9 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 
 	public function total()
 	{
-		return Arr::path($this->retrieve(), 'totalsForAllResults.'.$this->_metrics);
+		return Arr::path($this->retrieve(), 'totalsForAllResults.'.$this->metrics());
 	}
 
-	function __construct($metrics = NULL)
-	{
-		$this->_project_id = Service::factory('googleanalytics')->config('project_id');
-		$this->_access_token = Service::factory('googleanalytics')->access_token();
-		$this->metrics($metrics);
-		$this
-			->start_date('1 month ago')
-			->end_date('today');
-	}
-	
 	public function max_results($max_results = NULL)
 	{
 		if ($max_results !== NULL)
@@ -97,27 +105,6 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 		return $this->_metrics;
 	}
 	
-	public function start_date($start_date = NULL)
-	{
-		if ($start_date !== NULL)
-		{
-			$this->_start_date = date('Y-m-d', (is_numeric($start_date) ? $start_date : strtotime($start_date)));
-			return $this;
-		}
-
-		return $this->_start_date;
-	}
-	
-	public function end_date($end_date = NULL)
-	{
-		if ($end_date !== NULL)
-		{
-			$this->_end_date = date('Y-m-d', (is_numeric($end_date) ? $end_date : strtotime($end_date)));
-			return $this;
-		}
-		return $this->_end_date;
-	}
-
 	public function sort($sort = NULL)
 	{
 		if ($sort !== NULL)
@@ -156,16 +143,6 @@ abstract class Kohana_Service_GoogleAnalytics_Report
 			return $this;
 		}
 		return $this->_start_index;
-	}
-
-	public function project_id()
-	{
-		return $this->_project_id;
-	}
-
-	public function access_token()
-	{
-		return $this->_access_token;
 	}
 }
 
