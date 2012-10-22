@@ -1,34 +1,31 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Get a report for kissmetrics events
+ * Get a report for addthis events
  * 
- * @param string event the name of the event
- * @param string properties limit events based on user property. e.g. --properties="type=professional&test=test"
+ * @param string metric the name of the metric
  * @param string start_date the starting date, any strtotime format, defaults to yesterday
  * @param string end_date the end of the range date, any strtotime format, defaults to today
  */
-class Minion_Task_Report_Kissmetrics extends Minion_Task 
+class Minion_Task_Report_Addthis extends Minion_Task 
 {
 	protected $_config = array(
-		'event' => FALSE, 
-		'start_date' => 'yesterday', 
+		'metric' => FALSE, 
+		'start_date' => 'last week', 
 		'end_date' => 'today',
-		'properties' => '',
 	);
 
 	public function build_validation(Validation $validation)
 	{
 		return parent::build_validation($validation)
-			->rule('event', 'not_empty')
-			->rule('properties', 'json_decode')
+			->rule('metric', 'not_empty')
+			->rule('metric', 'in_array', array(':value', array('shares', 'clicks', 'subscriptions', 'sharers', 'influencers', 'clickers', 'users', 'searches', 'referers')))
 			->rule('start_date', 'strtotime') 
 			->rule('end_date', 'strtotime'); 
 	}
 
 	public function execute(array $options)
 	{
-		parse_str($options['properties'], $options['properties']);
-		$report = Service_Kissmetrics_Report::factory();
+		$report = Service_Addthis_Report::factory();
 		$report_params = array();
 		foreach ($options as $key => $value) 
 		{
