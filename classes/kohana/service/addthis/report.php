@@ -7,7 +7,7 @@ class Kohana_Service_Addthis_Report
 {
 	public static function factory($metric = NULL)
 	{
-		return new Service_Addthis_Report($metric = NULL);
+		return new Service_Addthis_Report($metric);
 	}
 
 	protected $_start_date;
@@ -62,7 +62,7 @@ class Kohana_Service_Addthis_Report
 
 		foreach ($this->data() as $day) 
 		{
-			if ($this->start_date() <= $day['date'] AND $this->end_date() > $day['date'])
+			if ($this->start_date() <= $day['date'] AND $this->end_date() >= $day['date'])
 			{
 				$total += $day[$this->metric()];
 			}
