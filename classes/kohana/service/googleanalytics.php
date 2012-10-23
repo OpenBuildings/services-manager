@@ -58,9 +58,9 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	 * @param string $value
 	 * @param int $opt_scope
 	 */
-	public function set_custom_var($index, $name, $value, $opt_scope = NULL)
+	public function set_custom_var($index, $name, $value, $opt_scope = 3)
 	{
-		$this->_custom_vars[$index][$name] = array(
+		$this->_custom_vars[$index] = array(
 			'index' => $index,
 			'name' => $name,
 			'value' => $value,
@@ -108,7 +108,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 ANALYTICS;
 	}
 
-	public function events_code()
+	protected function events_code()
 	{
 		$events = NULL;
 
@@ -120,16 +120,13 @@ ANALYTICS;
   	return $events;
 	}
 
-	public function custom_vars_code()
+	protected function custom_vars_code()
 	{
 		$vars = NULL;
 
-		foreach ($this->custom_vars() as $index => $v)
+		foreach ($this->custom_vars() as $index => $properties)
 		{
-			foreach ($v as $name => $properties)
-			{
-				$vars .= "_gaq.push(['_setCustomVar', {$index}, '{$name}', \"{$properties['value']}\", \"{$properties['opt_scope']}\"]);\n";
-			}
+			$vars .= "_gaq.push(['_setCustomVar', {$index}, '{$properties['name']}', \"{$properties['value']}\", \"{$properties['opt_scope']}\"]);\n";
 		}
 
 		return $vars;
