@@ -12,7 +12,7 @@ class Minion_Task_Kissmetrics_Import extends Minion_Task
 {
 	public function execute(array $options)
 	{
-		$config = Kohana::$config->load('services-manager.services.kissmetrics.reports');
+		$config = Kohana::$config->load('services-manager.reports.kissmetrics');
 
 		if ( ! $config)
 			throw new Kohana_Exception('You must set a reports array in the kissmetrics config with "database", "s3_key", "s3_secret", "s3_object"');
