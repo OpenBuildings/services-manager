@@ -1,7 +1,8 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
 /**
- * The basic class for managing analytics data 
+ * The basic class for managing analytics data.
+ * Adds basic consistent timerange setting
  * 
  * @package    Despark/services-manager
  * @author     Ivan Kerin
@@ -36,6 +37,13 @@ abstract class Kohana_Report
 			->end_date('today');
 	}
 
+	/**
+	 * Getter / Setter
+	 * Set the timerange start date, defaults to 1 month ago. Normalizes the date to Y-m-d H:i:s
+	 * 
+	 * @param  string $start_date 
+	 * @return string
+	 */
 	public function start_date($start_date = NULL)
 	{
 		if ($start_date !== NULL)
@@ -47,6 +55,13 @@ abstract class Kohana_Report
 		return $this->_start_date;
 	}
 	
+	/**
+	 * Getter / Setter
+	 * Set the timerange end date, defaults to today. Normalizes the date to Y-m-d H:i:s
+	 * 
+	 * @param  string $end_date 
+	 * @return string
+	 */
 	public function end_date($end_date = NULL)
 	{
 		if ($end_date !== NULL)

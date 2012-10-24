@@ -16,9 +16,9 @@ class Minion_Task_Kissmetrics_Setup extends Minion_Task
 		$config = Kohana::$config->load('services-manager.services.kissmetrics.reports');
 
 		if ( ! $config)
-			throw new Kohana_Exception('You must set a reports array in the kissmetrics config with "database", "s3_key", "s3_secret", "s3_object"');
+			throw new Kohana_Exception('You must set a reports array in the kissmetrics config with "database"');
 
-		if (count($missing_keys = array_diff(array('database', 's3_key', 's3_secret', 's3_object'), array_keys($config))))
+		if (count($missing_keys = array_diff(array('database'), array_keys($config))))
 			throw new Kohana_Exception('You must set :keys in your kissmetrics service reports configuration', array(':keys' => join(', ', $missing_keys)));
 
 		$database = Database::instance($config['database']);

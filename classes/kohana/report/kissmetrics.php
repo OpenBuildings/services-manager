@@ -1,7 +1,12 @@
 <?php
 
 /**
- * Local database reporting
+ * An interface for Kissmetrics Data, imported with the provided minion task
+ * 
+ * @package    Despark/services-manager
+ * @author     Ivan Kerin
+ * @copyright  (c) 2012 Despark Ltd.
+ * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
 class Kohana_Report_Kissmetrics extends Report
 {
@@ -13,6 +18,13 @@ class Kohana_Report_Kissmetrics extends Report
 		return Kohana::$config->load('services-manager.reports.kissmetrics.database');
 	}
 	
+	/**
+	 * Getter / Setter
+	 * Kissmetrics event
+	 * 
+	 * @param  string $event
+	 * @return string|Report_Kissmetrics
+	 */
 	public function event($event = NULL)
 	{
 		if ($event !== NULL)
@@ -23,6 +35,14 @@ class Kohana_Report_Kissmetrics extends Report
 		return $this->_event;
 	}
 
+	/**
+	 * Multi Getter / Setter
+	 * Set properties to filter your events by
+	 * 
+	 * @param  string|array $key
+	 * @param  string $value 
+	 * @return mixed
+	 */
 	public function properties($key = NULL, $value = NULL)
 	{
 		if ($key === NULL)
@@ -43,8 +63,10 @@ class Kohana_Report_Kissmetrics extends Report
 		return $this;
 	}
 
-	
-
+	/**
+	 * Return how many times the event has occurred filtered by properties
+	 * @return integer 
+	 */
 	public function total()
 	{
 		$select = DB::select()

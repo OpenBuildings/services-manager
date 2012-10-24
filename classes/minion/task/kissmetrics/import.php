@@ -2,6 +2,7 @@
 
 /**
  * Connects to a S3 bucket and imports Kissmetrics data.
+ * Must have 'database', 's3_key', 's3_secret', 's3_object' keys in your config for this to work, and the 'database' to be already created
  * 
  * @author erusev
  * @author Ivan K

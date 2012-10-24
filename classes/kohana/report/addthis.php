@@ -1,7 +1,13 @@
 <?php
 
 /**
- * Local database reporting
+ * An interface for Addthis Analytics API. 
+ * It is able to return data only a month back.
+ * 
+ * @package    Despark/services-manager
+ * @author     Ivan Kerin
+ * @copyright  (c) 2012 Despark Ltd.
+ * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
 class Kohana_Report_Addthis extends Report
 {
@@ -9,6 +15,14 @@ class Kohana_Report_Addthis extends Report
 	protected $_data;
 	protected $_date_template = 'Y-m-d';
 	
+	/**
+	 * Getter / Setter
+	 * Which metric to count 
+	 *
+	 * @link http://support.addthis.com/customer/portal/articles/381264-addthis-analytics-api
+	 * @param  string $metric
+	 * @return string|Report_Addthis
+	 */
 	public function metric($metric = NULL)
 	{
 		if ($metric !== NULL)
@@ -20,7 +34,10 @@ class Kohana_Report_Addthis extends Report
 		return $this->_metric;
 	}
 
-	
+	/**
+	 * Get the Raw data from Addthis API, day by day for a month
+	 * @return array 
+	 */
 	public function data()
 	{
 		if ($this->_data === NULL)
@@ -41,6 +58,10 @@ class Kohana_Report_Addthis extends Report
 		return $this->_data;
 	}
 
+	/**
+	 * Calculate the metric for the given timerange
+	 * @return integer
+	 */
 	public function total()
 	{
 		$total = 0;

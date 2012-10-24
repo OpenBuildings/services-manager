@@ -1,7 +1,12 @@
 <?php
 
 /**
- * Local database reporting
+ * An interface for google analytics API
+ * 
+ * @package    Despark/services-manager
+ * @author     Ivan Kerin
+ * @copyright  (c) 2012 Despark Ltd.
+ * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
 class Kohana_Report_GoogleAnalytics extends Report
 {
@@ -18,6 +23,10 @@ class Kohana_Report_GoogleAnalytics extends Report
 	protected $_start_index;
 	protected $_date_template = 'Y-m-d';
 	
+	/**
+	 * Build all the request query parameters needed to access the google analytics API
+	 * @return array 
+	 */
 	public function request_params()
 	{
 		$data = array(
@@ -36,11 +45,19 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return array_filter($data);
 	}
 
+	/**
+	 * Return the project_id set in the config
+	 * @return string
+	 */
 	public function project_id()
 	{
 		return Kohana::$config->load('services-manager.reports.googleanalytics.project_id');
 	}
 
+	/**
+	 * Generate a new access token for google analytics API using client_id, client_secret and refresh_token, set in the config
+	 * @return string 
+	 */
 	public function access_token()
 	{
 		if ( ! $this->_access_token)
@@ -60,21 +77,41 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return $this->_access_token;
 	}
 
+	/**
+	 * Get the result from calling Google Anlaytics API
+	 * @return array 
+	 */
 	public function retrieve()
 	{
 		return json_decode(@file_get_contents(Report_GoogleAnalytics::URL.'?'.http_build_query($this->request_params())), TRUE);
 	}
 
+	/**
+	 * Rows from Google Analytics API response
+	 * @return array 
+	 */
 	public function rows()
 	{
 		return (array) Arr::get($this->retrieve(), 'rows');
 	}
 
+	/**
+	 * Get 'totals' from Google Analytics API response
+	 * @return mixed
+	 */
 	public function total()
 	{
 		return Arr::path($this->retrieve(), 'totalsForAllResults.'.$this->metrics());
 	}
 
+	/**
+	 * Getter / Setter
+	 * The maximum number of rows to include in the response.
+	 *
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#maxResults
+	 * @param  string $max_results
+	 * @return string|Report_GoogleAnalytics
+	 */
 	public function max_results($max_results = NULL)
 	{
 		if ($max_results !== NULL)
@@ -85,6 +122,14 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return $this->_max_results;
 	}
 	
+	/**
+	 * Getter / Setter
+	 * A list of comma-separated dimensions for your Analytics data, such as ga:browser,ga:city.
+	 *
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#dimensions
+	 * @param  string $dimensions
+	 * @return string|Report_GoogleAnalytics
+	 */
 	public function dimensions($dimensions = NULL)
 	{
 		if ($dimensions !== NULL)
@@ -95,6 +140,14 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return $this->_dimensions;
 	}
 	
+	/**
+	 * Getter / Setter
+	 * A list of comma-separated metrics, such as ga:visits,ga:bounces.
+	 *
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#metrics 
+	 * @param  string $metrics 
+	 * @return string|Report_GoogleAnalytics
+	 */
 	public function metrics($metrics = NULL)
 	{
 		if ($metrics !== NULL)
@@ -105,6 +158,14 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return $this->_metrics;
 	}
 	
+	/**
+	 * Getter / Setter
+	 * A list of comma-separated dimensions and metrics indicating the sorting order and sorting direction for the returned data.
+	 *
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#sort
+	 * @param  string $sort
+	 * @return string|Report_GoogleAnalytics
+	 */
 	public function sort($sort = NULL)
 	{
 		if ($sort !== NULL)
@@ -115,6 +176,14 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return $this->_sort;
 	}
 
+	/**
+	 * Getter / Setter
+	 * Dimension or metric filters that restrict the data returned for your request.
+	 *
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters
+	 * @param  string $filters 
+	 * @return string|Report_GoogleAnalytics
+	 */
 	public function filters($filters = NULL)
 	{
 		if ($filters !== NULL)
@@ -125,6 +194,14 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return $this->_filters;
 	}	
 
+	/**
+	 * Getter / Setter
+	 * Segments the data returned for your request.
+	 *
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#segment
+	 * @param  string $segment
+	 * @return string|Report_GoogleAnalytics
+	 */
 	public function segment($segment = NULL)
 	{
 		if ($segment !== NULL)
@@ -135,6 +212,14 @@ class Kohana_Report_GoogleAnalytics extends Report
 		return $this->_segment;
 	}
 
+	/**
+	 * Getter / Setter
+	 * The first row of data to retrieve, starting at 1. Use this parameter as a pagination mechanism along with the max-results parameter.
+	 *
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#startIndex
+	 * @param  string $start_index 
+	 * @return string|Report_GoogleAnalytics
+	 */
 	public function start_index($start_index = NULL)
 	{
 		if ($start_index !== NULL)
