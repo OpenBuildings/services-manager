@@ -1,6 +1,10 @@
 Services Manager
 ================
 
+[![Build Status](https://travis-ci.org/OpenBuildings/services-manager.png?branch=master)](https://travis-ci.org/OpenBuildings/services-manager)
+[![Coverage Status](https://coveralls.io/repos/OpenBuildings/services-manager/badge.png?branch=master)](https://coveralls.io/r/OpenBuildings/services-manager?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/openbuildings/services-manager/v/stable.png)](https://packagist.org/packages/openbuildings/services-manager)
+
 This modules purpose is to ease out the management of various external services that your application may depend upon. Each service is governed by a single easily reachable class that does all the required loading of PHP or Javascript, 
 
 Setting up:
@@ -162,9 +166,8 @@ Example:
 <?php Service::factory('mailchimp')->listSubscribe('newsletter', 'me@example.com'); ?>
 ```
 
-License
--------
+## License
 
-Services Manager is under Copyright © 2012 Despark Ltd. developed by Ivan Kerin. It is free software, and may be redistributed under the terms specified in the LICENSE file.
+Copyright (c) 2012-2013, OpenBuildings Ltd. Developed by Ivan Kerin, Yasen Yanev and Haralan Dobrev as part of [clippings.com](http://clippings.com)
 
-
+Under BSD-3-Clause license, read LICENSE file.

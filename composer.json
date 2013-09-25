@@ -1,0 +1,41 @@
+{
+	"name": "openbuildings/services-manager",
+	"description": "This modules purpose is to ease out the management of various external services that your application may depend upon",
+	"type": "kohana-module",
+	"keywords": [
+		"service",
+		"php",
+		"kohana"
+	],
+	"homepage": "https://github.com/OpenBuildings/services-manager",
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Yasen Yanev",
+			"email": "yasen@openbuildings.com",
+			"role": "Author"
+		},
+		{
+			"name": "Ivan Kerin",
+			"email": "ivan@openbuildings.com",
+			"role": "Author"
+		},
+		{
+			"name": "Haralan Dobrev",
+			"email": "hdobrev@despark.com",
+			"role": "Author"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/OpenBuildings/services-manager/issues",
+		"source": "https://github.com/OpenBuildings/services-manager"
+	},
+	"require": {
+		"php": ">=5.4.0",
+		"composer/installers": "*",
+		"facebook/php-sdk": "v3.2.2",
+		"mailchimp/mailchimp": "2.0.3",
+		"pda/pheanstalk": "v2.1.0",
+		"lusitanian/oauth": "v0.2.3"
+	}
+}
