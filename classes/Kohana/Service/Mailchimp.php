@@ -47,11 +47,8 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 	 */
 	public function init()
 	{
-		require_once Kohana::find_file("vendor", 'MCAPI.class');
-
 		$this->api_key = $this->_config['api-key'];
-
-		$this->_api = new MCAPI($this->_config['api-key']);
+		$this->_api = new Mailchimp($this->_config['api-key']);
 	}
 
 }

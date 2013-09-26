@@ -50,9 +50,7 @@ class Kohana_Service_Beanstalkd extends Service implements Service_Type_Php
 	{
 		if ($server = Arr::get($this->_config, 'server'))
 		{
-			require_once Kohana::find_file("vendor/pheanstalk", 'pheanstalk_init');
-
-			$this->_pheanstalk = new Pheanstalk($server);
+			$this->_pheanstalk = new Pheanstalk_Pheanstalk($server);
 		}
 	}
 

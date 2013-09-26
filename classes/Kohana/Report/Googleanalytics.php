@@ -1,5 +1,9 @@
 <?php
 
+use OAuth\OAuth2\Service\Google;
+use OAuth\Common\Storage\Session;
+use OAuth\Common\Consumer\Credentials;
+
 /**
  * An interface for google analytics API
  * 
@@ -77,11 +81,23 @@ class Kohana_Report_Googleanalytics extends Report
 			if (count($missing_keys = array_diff(array('refresh_token', 'client_id', 'client_secret'), array_keys($config))))
 				throw new Kohana_Exception('Must set :keys for googleanalytics service configuration', array(':keys' => join(', ', $missing_keys)));
 
-			require_once Kohana::find_file("vendor", "googleoauth");
+			// require_once Kohana::find_file("vendor", "googleoauth");
 
-			$auth = new GoogleOAuth($config['client_id'], $config['client_secret']);
-			
-			$this->_access_token = $auth->obtain_access_token($config['refresh_token']);
+			// Session storage
+			$storage = new Session();
+			// Setup the credentials for the requests
+			$credentials = new Credentials(
+				$config['client_id'],
+				$config['client_secret'],
+				Request::current()->url()
+			);
+
+			$serviceFactory = new \OAuth\ServiceFactory();
+			// Instantiate the Google service using the credentials, http client and storage mechanism for the token
+			$googleService = $serviceFactory->createService('google', $credentials, $storage, array('userinfo_email', 'userinfo_profile'));
+			$tokenInterface = new \OAuth\OAuth2\Token\StdOAuth2Token(NULL, $config['refresh_token']);
+			$token = $googleService->refreshAccessToken($tokenInterface);
+			$this->_access_token = $token->getAccessToken();
 		}
 
 		return $this->_access_token;

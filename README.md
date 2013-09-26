@@ -163,7 +163,7 @@ This service uses Mailchimp api Version 1.3 and all methods are proxied to the A
 Example:
 
 ``` php
-<?php Service::factory('mailchimp')->listSubscribe('newsletter', 'me@example.com'); ?>
+<?php Service::factory('mailchimp')->lists->subscribe('newsletter', 'me@example.com'); ?>
 ```
 
 ## License

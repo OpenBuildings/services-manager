@@ -5,7 +5,10 @@
 	"keywords": [
 		"service",
 		"php",
-		"kohana"
+		"kohana",
+		"external",
+		"manager",
+		"javascript"
 	],
 	"homepage": "https://github.com/OpenBuildings/services-manager",
 	"license": "BSD-3-Clause",

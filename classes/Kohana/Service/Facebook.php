@@ -205,11 +205,6 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		if ($this->_facebook)
 			return $this->_facebook;
 
-		if ( ! class_exists('Facebook'))
-		{
-			require_once Kohana::find_file('vendor/facebook-sdk', 'facebook');
-		}
-
 		return $this->_facebook = new Facebook(Arr::get($this->_config, 'auth'));
 	}
 
