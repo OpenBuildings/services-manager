@@ -76,11 +76,6 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 		}
 
 		$return = call_user_func_array($callee, $args);
-		
-		if ($this->_api->errorCode)
-		{
-			throw new Service_Mailchimp_Exception($this->_api->errorMessage, NULL, $this->_api->errorCode);
-		}
 
 		return $return;
 	}
