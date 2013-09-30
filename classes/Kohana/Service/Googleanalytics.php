@@ -132,9 +132,9 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	_gaq.push(['_setAccount', '{$api_key}']);
 	{$events}
 	{$custom_vars}
-	{$ecommerce}
-	{$currency}
 	_gaq.push(['_trackPageview']);
+	{$currency}
+	{$ecommerce}
 	(function() {
 	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 	  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -184,7 +184,7 @@ ANALYTICS;
 				$code .= "_gaq.push(".json_encode($item_code).");\n";
 			}
 
-			$code .= "_gaq.push('_trackTrans');\n";
+			$code .= "_gaq.push(['_trackTrans']);\n";
 		}
 
 		return $code;
