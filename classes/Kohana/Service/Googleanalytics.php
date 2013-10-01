@@ -114,7 +114,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 			'action' => $action, 
 			'label' => $label, 
 			'value' => $value, 
-			'opt_noninteraction' => $opt_noninteraction
+			'opt_noninteraction' => $opt_noninteraction ? 'true':'false'
 		);
 	}
 
