@@ -9,8 +9,14 @@
  * @copyright  (c) 2012 Despark Ltd.
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
-abstract class Kohana_Service_Googleanalytics extends Service implements Service_Type_Javascript
-{
+abstract class Kohana_Service_Googleanalytics extends Service implements Service_Type_Javascript {
+
+	const SCOPE_VISITOR = 1;
+
+	const SCOPE_SESSION = 2;
+
+	const SCOPE_PAGE = 3;
+
 	protected $_access_token;
 
 	protected $_events_queue = array();
@@ -61,7 +67,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	 * It is a number whose possible values are 1 (visitor-level), 2 (session-level), 
 	 * or 3 (page-level). When left undefined, the custom variable scope defaults to page-level interaction.
 	 */
-	public function set_custom_var($index, $name, $value, $opt_scope = 3)
+	public function set_custom_var($index, $name, $value, $opt_scope = self::SCOPE_PAGE)
 	{
 		if ( ! $this->initialized())
 			return NULL;
@@ -98,7 +104,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 		$this->_items = $items;
 	}
 
-	public function track_event($category, $action, $label = NULL, $value = NULL, $opt_scope = 3)
+	public function track_event($category, $action, $label = NULL, $value = NULL, $opt_scope = self::SCOPE_PAGE)
 	{
 		if ( ! $this->initialized())
 			return NULL;
