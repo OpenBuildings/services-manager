@@ -93,7 +93,7 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 
 		$html = $this->helperInlineCss($html, $strip_css);
 
-		return $html;
+		return $html['html'];
 	}
 
 	/**
