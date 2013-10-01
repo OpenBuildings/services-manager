@@ -1,5 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
+use Openbuildings\Swiftmailer\GoogleCampaignPlugin;
+
 /**
  * Exceptionalio service adapter
  * requires 'api-key' configuration
@@ -78,6 +80,18 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 		$return = call_user_func_array($callee, $args);
 
 		return $return;
+	}
+
+	public function process_html($html, $strip_css = FALSE, $campaigns = array())
+	{
+		if (count($campaigns))
+		{
+			$main_campaign = reset($campaigns);
+			array_shift($campaigns);
+			$html = GoogleCampaignPlugin::embedCampaigns($html, 'UTF-8', $main_campaign, $campaigns);
+		}
+
+		$html = $this->helperInlineCss($html, $strip_css);
 	}
 
 	/**

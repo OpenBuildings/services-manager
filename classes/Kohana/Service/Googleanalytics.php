@@ -9,8 +9,14 @@
  * @copyright  (c) 2012 Despark Ltd.
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
-abstract class Kohana_Service_Googleanalytics extends Service implements Service_Type_Javascript
-{
+abstract class Kohana_Service_Googleanalytics extends Service implements Service_Type_Javascript {
+
+	const SCOPE_VISITOR = 1;
+
+	const SCOPE_SESSION = 2;
+
+	const SCOPE_PAGE = 3;
+
 	protected $_access_token;
 
 	protected $_events_queue = array();
@@ -61,7 +67,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	 * It is a number whose possible values are 1 (visitor-level), 2 (session-level), 
 	 * or 3 (page-level). When left undefined, the custom variable scope defaults to page-level interaction.
 	 */
-	public function set_custom_var($index, $name, $value, $opt_scope = 3)
+	public function set_custom_var($index, $name, $value, $opt_scope = self::SCOPE_PAGE)
 	{
 		if ( ! $this->initialized())
 			return NULL;
@@ -98,7 +104,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 		$this->_items = $items;
 	}
 
-	public function track_event($category, $action, $label = NULL, $value = NULL, $opt_scope = 3)
+	public function track_event($category, $action, $label = NULL, $value = NULL, $opt_noninteraction = NULL)
 	{
 		if ( ! $this->initialized())
 			return NULL;
@@ -108,7 +114,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 			'action' => $action, 
 			'label' => $label, 
 			'value' => $value, 
-			'opt_scope' => $opt_scope
+			'opt_noninteraction' => $opt_noninteraction
 		);
 	}
 
@@ -118,7 +124,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	 */
 	public function code()
 	{
-		if ( ! $this->initialized() OR ! $api_key = $this->config('api-key'))
+		if ( ! $this->initialized() OR ! ($api_key = $this->config('api-key')))
 			return NULL;
 
 		$events = $this->events_code();
@@ -130,9 +136,9 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', '{$api_key}']);
-	{$events}
-	{$custom_vars}
 	_gaq.push(['_trackPageview']);
+	{$custom_vars}
+	{$events}
 	{$currency}
 	{$ecommerce}
 	(function() {
@@ -150,7 +156,7 @@ ANALYTICS;
 
 		foreach ($this->queue() as $event) 
 		{
-			$events .= "_gaq.push(['_trackEvent', \"{$event['category']}\", \"{$event['action']}\", \"{$event['label']}\", \"{$event['value']}\", {$event['opt_scope']}]);\n";				
+			$events .= "_gaq.push(['_trackEvent', \"{$event['category']}\", \"{$event['action']}\", \"{$event['label']}\", \"{$event['value']}\", {$event['opt_noninteraction']}]);\n";				
 		}
 
 		return $events;
