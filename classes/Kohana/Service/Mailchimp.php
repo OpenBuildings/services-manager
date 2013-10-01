@@ -88,7 +88,7 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 		{
 			$main_campaign = reset($campaigns);
 			array_shift($campaigns);
-			$html = GoogleCampaignPlugin::embedCampaigns($html, 'UTF-8', $main_campaign, $campaigns);
+			$html = GoogleCampaignPlugin::embedCampaigns($html, $main_campaign, $campaigns, 'UTF-8');
 		}
 
 		$html = $this->helperInlineCss($html, $strip_css);
