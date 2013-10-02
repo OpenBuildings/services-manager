@@ -109,13 +109,27 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 		if ( ! $this->initialized())
 			return NULL;
 
-		$this->_events_queue[] = array(
+		$event_data = array(
 			'category' => $category, 
-			'action' => $action, 
-			'label' => $label, 
-			'value' => $value, 
-			'opt_noninteraction' => $opt_noninteraction ? 'true':'false'
+			'action' => $action
 		);
+
+		if ($label !== NULL)
+		{
+			$event_data['label'] = (string) $label;
+		}
+
+		if ($value !== NULL)
+		{
+			$event_data['value'] = (int) $value;
+		}
+
+		if ($opt_noninteraction !== NULL)
+		{
+			$event_data['opt_noninteraction'] = ((bool) $opt_noninteraction) ? 'true':'false';
+		}
+
+		$this->_events_queue[] = $event_data;
 	}
 
 	/**
@@ -156,7 +170,10 @@ ANALYTICS;
 
 		foreach ($this->queue() as $event) 
 		{
-			$events .= "_gaq.push(['_trackEvent', \"{$event['category']}\", \"{$event['action']}\", \"{$event['label']}\", \"{$event['value']}\", {$event['opt_noninteraction']}]);\n";				
+			$event_keys = array('category', 'action', 'label', 'value', 'opt_noninteraction');
+			$params = join(', ', array_filter(Arr::extract($event, $event_keys)));
+
+			$events .= "_gaq.push(['_trackEvent', {$params}]);\n";
 		}
 
 		return $events;
