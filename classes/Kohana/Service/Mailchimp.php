@@ -23,7 +23,7 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 		'campaignsSchedule',
 		'campaignsUnschedule',
 		'campaignsSendTest',
-		'campaignsSendNow',
+		'campaignsSend',
 		'campaignsCreate',
 		'campaignsUpdate',
 		'helperInlineCss',
