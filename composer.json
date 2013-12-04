@@ -34,11 +34,11 @@
 		"source": "https://github.com/OpenBuildings/services-manager"
 	},
 	"require": {
-		"php": ">=5.4.*",
+		"php": ">=5.4.0",
 		"composer/installers": "*",
-		"facebook/php-sdk": "v3.2.*",
+		"facebook/php-sdk": "3.2.*",
 		"mailchimp/mailchimp": "2.0.*",
-		"pda/pheanstalk": "v2.1.*",
-		"lusitanian/oauth": "v0.2.*"
+		"pda/pheanstalk": "2.1.*",
+		"lusitanian/oauth": "0.2.*"
 	}
 }
