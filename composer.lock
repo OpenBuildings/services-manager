@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c88a62329b54735c3b471b8a4bfddb61",
+    "hash": "e56ead4e18f7da9321d8fc91f9198144",
     "packages": [
         {
             "name": "composer/installers",
-            "version": "v1.0.6",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "b3bd071ea114a57212c75aa6a2eef5cfe0cc798f"
+                "reference": "d792632d27e1980d921cbbba12eab7b888338d4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/b3bd071ea114a57212c75aa6a2eef5cfe0cc798f",
-                "reference": "b3bd071ea114a57212c75aa6a2eef5cfe0cc798f",
+                "url": "https://api.github.com/repos/composer/installers/zipball/d792632d27e1980d921cbbba12eab7b888338d4c",
+                "reference": "d792632d27e1980d921cbbba12eab7b888338d4c",
                 "shasum": ""
             },
             "replace": {
@@ -46,7 +46,7 @@
                 {
                     "name": "Kyle Robinson Young",
                     "email": "kyle@dontkry.com",
-                    "homepage": "http://dontkry.com",
+                    "homepage": "https://github.com/shama",
                     "role": "Developer"
                 }
             ],
@@ -59,6 +59,7 @@
                 "agl",
                 "cakephp",
                 "codeigniter",
+                "concrete5",
                 "drupal",
                 "fuelphp",
                 "installer",
@@ -76,26 +77,29 @@
                 "wordpress",
                 "zend"
             ],
-            "time": "2013-08-20 04:37:09"
+            "time": "2013-10-24 16:13:49"
         },
         {
             "name": "facebook/php-sdk",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-sdk.git",
-                "reference": "bf99924386be074da30a8e9d6bbcb49d3333da12"
+                "reference": "6714042fa2f5979d4c64c7d11fb4bcab16bdf6cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-sdk/zipball/bf99924386be074da30a8e9d6bbcb49d3333da12",
-                "reference": "bf99924386be074da30a8e9d6bbcb49d3333da12",
+                "url": "https://api.github.com/repos/facebook/facebook-php-sdk/zipball/6714042fa2f5979d4c64c7d11fb4bcab16bdf6cb",
+                "reference": "6714042fa2f5979d4c64c7d11fb4bcab16bdf6cb",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
                 "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
             },
             "type": "library",
             "autoload": {
@@ -119,20 +123,20 @@
                 "facebook",
                 "sdk"
             ],
-            "time": "2013-01-15 21:37:15"
+            "time": "2013-11-19 23:11:14"
         },
         {
             "name": "lusitanian/oauth",
-            "version": "v0.2.3",
+            "version": "v0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lusitanian/PHPoAuthLib.git",
-                "reference": "75074f198e8c7697ff72c1d2a7d8fc8a5ef80fec"
+                "reference": "b83cf1079f40c52de1fe62c8fd49741ca7c7aa1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lusitanian/PHPoAuthLib/zipball/75074f198e8c7697ff72c1d2a7d8fc8a5ef80fec",
-                "reference": "75074f198e8c7697ff72c1d2a7d8fc8a5ef80fec",
+                "url": "https://api.github.com/repos/Lusitanian/PHPoAuthLib/zipball/b83cf1079f40c52de1fe62c8fd49741ca7c7aa1f",
+                "reference": "b83cf1079f40c52de1fe62c8fd49741ca7c7aa1f",
                 "shasum": ""
             },
             "require": {
@@ -182,20 +186,20 @@
                 "oauth",
                 "security"
             ],
-            "time": "2013-09-23 17:22:53"
+            "time": "2013-11-09 14:55:37"
         },
         {
             "name": "mailchimp/mailchimp",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/mailchimp/mailchimp-api-php.git",
-                "reference": "4d1d21ad6a1d4948ed32789dddb0d73cfb590b4b"
+                "reference": "190cf58000ee4ed47900c78d5d4ef58c4cae0b49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/mailchimp/mailchimp-api-php/get/4d1d21ad6a1d4948ed32789dddb0d73cfb590b4b.zip",
-                "reference": "4d1d21ad6a1d4948ed32789dddb0d73cfb590b4b",
+                "url": "https://bitbucket.org/mailchimp/mailchimp-api-php/get/190cf58000ee4ed47900c78d5d4ef58c4cae0b49.zip",
+                "reference": "190cf58000ee4ed47900c78d5d4ef58c4cae0b49",
                 "shasum": ""
             },
             "require": {
@@ -225,7 +229,7 @@
                 "api",
                 "email"
             ],
-            "time": "2013-08-22 19:32:31"
+            "time": "2013-10-17 12:16:33"
         },
         {
             "name": "pda/pheanstalk",
