@@ -16,8 +16,8 @@ before_script:
   - mkdir -p build/logs
   - composer require --dev satooshi/php-coveralls:dev-master
   - composer install
-  # - mysql -e 'create database `test-services-manager`;'
-  # - mysql --default-character-set=utf8 test-services-manager < tests/test_data/structure.sql
+  - mysql -e 'create database `test-services-manager`;'
+  - mysql --default-character-set=utf8 test-services-manager < tests/test_data/structure.sql
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
