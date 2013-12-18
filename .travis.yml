@@ -4,6 +4,11 @@ language: php
 php:
   - 5.3
 
+notifications:
+  campfire:
+    rooms:
+      secure: Cn+Vouj2Mg6hcvg1iR/zGM8iOhBWksAwQVKcUR1e/7kYTduNfMTI8miaMDIyDHsafibrvf/5QxvL7H0yU+tQUJ7HZID359z3VXpuA3PTno7BdwbvlklKyRBmjn+/6vAG9g/5wT56QKSBnxaUo4Qxv4q1naFdf3o8wM22MtiB0Ck=
+
 script:
   - phpunit --coverage-clover build/logs/clover.xml
 
