@@ -20,7 +20,7 @@ abstract class Kohana_Service_Sentry extends Service
 	 * @param  Exception $exception exception to be logged
 	 * @return NULL|string NULL on failure; event id otherwise
 	 */
-	function capture_exception(Exception $exception)
+	function capture_exception(Exception $exception, array $data = array())
 	{
 		if ( ! $this->initialized())
 			return NULL;
@@ -34,7 +34,7 @@ abstract class Kohana_Service_Sentry extends Service
 			$email = $user->email;
 		}
 
-		return $this->send_exception_with_user_data($exception, $id, $email);
+		return $this->send_exception_with_user_data($exception, $id, $email, $data);
 	}
 
 	public function send_exception_with_user_data(Exception $exception, $id = NULL, $email = NULL, array $data = array())

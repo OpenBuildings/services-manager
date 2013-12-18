@@ -15,9 +15,9 @@ class Service_SentryTest extends Testcase_Extended {
 		$data = array('data' => 'testdata');
 
 		$sentry
-			->expects($this->exactly(3))
+			->expects($this->exactly(4))
 			->method('initialized')
-			->will($this->onConsecutiveCalls(FALSE, TRUE, TRUE));
+			->will($this->onConsecutiveCalls(FALSE, TRUE, TRUE, TRUE));
 
 		$sentry
 			->expects($this->at(2))
@@ -30,6 +30,12 @@ class Service_SentryTest extends Testcase_Extended {
 			->method('send_exception_with_user_data')
 			->with($this->identicalTo($exception), $this->equalTo($user->id()), $this->equalTo($user->email), $this->equalTo(array()))
 			->will($this->returnValue('test_id_3'));
+
+		$sentry
+			->expects($this->at(6))
+			->method('send_exception_with_user_data')
+			->with($this->identicalTo($exception), $this->equalTo($user->id()), $this->equalTo($user->email), $this->equalTo($data))
+			->will($this->returnValue('test_id_4'));
 
 
 		$result_1 = $sentry
@@ -49,5 +55,9 @@ class Service_SentryTest extends Testcase_Extended {
 
 		$this->assertEquals('test_id_3', $result_3);		
 
+		$result_4 = $sentry
+			->capture_exception($exception, $data);
+
+		$this->assertEquals('test_id_4', $result_4);		
 	}
 }
