@@ -12,6 +12,8 @@
 abstract class Kohana_Service_Sentry extends Service
 {
 	private $client;
+
+	private $user_data = array('id' => NULL, 'email' => NULL, 'data' => NULL);
 	
 	/**
 	 * Send an exception to Sentry
@@ -22,10 +24,31 @@ abstract class Kohana_Service_Sentry extends Service
 	{
 		if ( ! $this->initialized())
 			return NULL;
-		
+
+		$id = NULL;
+		$email = NULL;
+
+		if (Auth::instance() AND ($user = Auth::instance()->get_user())) 
+		{
+			$id = $user->id();
+			$email = $user->email;
+		}
+
+		return $this->send_exception_with_user_data($exception, $id, $email);
+	}
+
+	public function send_exception_with_user_data(Exception $exception, $id = NULL, $email = NULL, array $data = array())
+	{
+		$this->client()->set_user_data($id, $email, $data);	
+
 		// Use getIdent to be future-proof when data returned from
 		// captureException might be somehow hashed in getIdent
-		return $this->client->getIdent($this->client->captureException($exception));
+		return $this->client()->getIdent($this->client->captureException($exception));
+	}
+
+	public function client()
+	{
+		return $this->client;
 	}
 	
 	/**
@@ -35,14 +58,5 @@ abstract class Kohana_Service_Sentry extends Service
 	function init()
 	{
 		$this->client = new Raven_Client($this->_config['dsn'], $this->_config['options']);
-		
-		$user = Auth::instance()->get_user();
-		
-		if ($user)
-		{
-			$this->client->set_user_data($user->id, NULL, array(
-				'username' => $user->username,
-			));
-		}
 	}
 }
