@@ -2,7 +2,6 @@ Services Manager
 ================
 
 [![Build Status](https://travis-ci.org/OpenBuildings/services-manager.png?branch=master)](https://travis-ci.org/OpenBuildings/services-manager)
-[![Coverage Status](https://coveralls.io/repos/OpenBuildings/services-manager/badge.png?branch=master)](https://coveralls.io/r/OpenBuildings/services-manager?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/openbuildings/services-manager/v/stable.png)](https://packagist.org/packages/openbuildings/services-manager)
 
 This modules purpose is to ease out the management of various external services that your application may depend upon. Each service is governed by a single easily reachable class that does all the required loading of PHP or Javascript, 

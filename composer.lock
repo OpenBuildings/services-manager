@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e56ead4e18f7da9321d8fc91f9198144",
+    "hash": "a990e25eba1b7fe967140167cdbe5b2f",
     "packages": [
         {
             "name": "composer/installers",
@@ -275,7 +275,226 @@
         }
     ],
     "packages-dev": [
-
+        {
+            "name": "openbuildings/flex-storage",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OpenBuildings/flex-storage.git",
+                "reference": "176bdf7dd4f8544c662afdd829331f80a5c04db9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OpenBuildings/flex-storage/zipball/176bdf7dd4f8544c662afdd829331f80a5c04db9",
+                "reference": "176bdf7dd4f8544c662afdd829331f80a5c04db9",
+                "shasum": ""
+            },
+            "require": {
+                "rackspace/php-opencloud": "1.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Flex\\Storage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Kerin",
+                    "email": "ivan@openbuildings.com",
+                    "homepage": "https://github.com/OpenBuildings/jam",
+                    "role": "Author"
+                }
+            ],
+            "description": "Flexible storage provider for files (rackspace, aws, ftp, local)",
+            "time": "2013-08-14 07:24:02"
+        },
+        {
+            "name": "openbuildings/jam",
+            "version": "0.4.38",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OpenBuildings/jam.git",
+                "reference": "0df6c86938a11c6cdf872b95452ed6e826b63b25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OpenBuildings/jam/zipball/0df6c86938a11c6cdf872b95452ed6e826b63b25",
+                "reference": "0df6c86938a11c6cdf872b95452ed6e826b63b25",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "openbuildings/flex-storage": "0.1.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "openbuildings/kohana-test-bootsrap": "0.1.*"
+            },
+            "suggest": {
+                "openbuildings/jam-auth": "A Kohana Auth implementation for Jam, with services",
+                "openbuildings/jam-closuretable": "Closuretable implementation for Jam ORM",
+                "openbuildings/jam-monetary": "Convert and format currencies and amounts with a Jam field",
+                "openbuildings/jam-tart": "Jam admin builder"
+            },
+            "type": "kohana-module",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Kerin",
+                    "email": "ivan@openbuildings.com",
+                    "homepage": "https://github.com/OpenBuildings/jam",
+                    "role": "Author"
+                }
+            ],
+            "description": "Small but feature rich ORM, has extensible models and builders, baked in upload functionality, supporting multiple backends (rackspace, ftp), polymorphic associations, form builders, nested forms, validators",
+            "homepage": "https://github.com/OpenBuildings/jam",
+            "keywords": [
+                "database",
+                "form builder",
+                "kohana",
+                "orm",
+                "upload",
+                "validation"
+            ],
+            "time": "2013-12-04 12:19:54"
+        },
+        {
+            "name": "openbuildings/jam-auth",
+            "version": "0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OpenBuildings/jam-auth.git",
+                "reference": "88097b132467b64e2985bc67ca218e162a33d7c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OpenBuildings/jam-auth/zipball/88097b132467b64e2985bc67ca218e162a33d7c1",
+                "reference": "88097b132467b64e2985bc67ca218e162a33d7c1",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "facebook/php-sdk": "3.2.*",
+                "openbuildings/jam": "0.4.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "openbuildings/kohana-test-bootsrap": "0.1.*"
+            },
+            "type": "kohana-module",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Kerin",
+                    "email": "ivan@openbuildings.com",
+                    "homepage": "https://github.com/OpenBuildings/jam",
+                    "role": "Author"
+                }
+            ],
+            "description": "This is a Kohana Auth driver, for Jam",
+            "homepage": "https://github.com/OpenBuildings/jam-auth",
+            "keywords": [
+                "Authentication",
+                "auth",
+                "facebook",
+                "jam",
+                "kohana",
+                "login"
+            ],
+            "time": "2013-09-18 07:28:00"
+        },
+        {
+            "name": "openbuildings/kohana-test-bootsrap",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OpenBuildings/kohana-test-bootstrap.git",
+                "reference": "57c9cae9bd97edbe58d1c41c35c499c7d54f4030"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OpenBuildings/kohana-test-bootstrap/zipball/57c9cae9bd97edbe58d1c41c35c499c7d54f4030",
+                "reference": "57c9cae9bd97edbe58d1c41c35c499c7d54f4030",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Kerin",
+                    "email": "ivan@openbuildings.com",
+                    "homepage": "https://github.com/OpenBuildings/jam",
+                    "role": "Author"
+                }
+            ],
+            "description": "Kohana core classes repackaged with composer, used to test modules",
+            "time": "2013-10-01 08:57:54"
+        },
+        {
+            "name": "rackspace/php-opencloud",
+            "version": "V1.5.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rackspace/php-opencloud.git",
+                "reference": "f4c4bbbae8b108c572b346a7cd350c62122451d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rackspace/php-opencloud/zipball/f4c4bbbae8b108c572b346a7cd350c62122451d5",
+                "reference": "f4c4bbbae8b108c572b346a7cd350c62122451d5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Glen Campbell",
+                    "email": "glen.campbell@rackspace.com"
+                },
+                {
+                    "name": "Jamie Hannaford",
+                    "email": "jamie.hannaford@rackspace.com",
+                    "homepage": "https://github.com/jamiehannaford"
+                }
+            ],
+            "description": "Rackspace open cloud php library",
+            "keywords": [
+                "cloudfiles",
+                "opencloud"
+            ],
+            "time": "2013-08-01 16:12:19"
+        }
     ],
     "aliases": [
 

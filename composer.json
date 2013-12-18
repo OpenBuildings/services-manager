@@ -40,5 +40,9 @@
 		"mailchimp/mailchimp": "2.0.*",
 		"pda/pheanstalk": "2.1.*",
 		"lusitanian/oauth": "0.2.*"
+	},
+	"require-dev": {
+		"openbuildings/kohana-test-bootsrap": "0.1.*",
+		"openbuildings/jam-auth": "0.2.*"
 	}
 }
