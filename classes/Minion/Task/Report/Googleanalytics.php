@@ -2,7 +2,7 @@
 
 /**
  * Get a report for googleanalytics events
- * 
+ *
  * @param string metrics the name of the metrics to get (e.g. ga:visits)
  * @param string start_date the starting date, any strtotime format, defaults to yesterday
  * @param string end_date the end of the range date, any strtotime format, defaults to today
@@ -12,13 +12,13 @@
  * @param string dimensions the dimensions (y column)
  * @param string filters filters
  * @param string segment segment
- * 
+ *
  */
-class Minion_Task_Report_GoogleAnalytics extends Minion_Task 
+class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 {
 	protected $_config = array(
 		'metrics' => FALSE,
-		'start_date' => 'yesterday', 
+		'start_date' => 'yesterday',
 		'end_date' => 'today',
 		'sort' => FALSE,
 		'max_results' => FALSE,
@@ -33,11 +33,11 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 	{
 		return parent::build_validation($validation)
 			->rule('metrics', 'not_empty')
-			->rule('start_date', 'strtotime') 
+			->rule('start_date', 'strtotime')
 			->rule('end_date', 'strtotime')
 			->rule('start_index', 'digit')
 			->rule('result', "in_array", array(':value', array('total', 'rows')))
-			->rule('max_results', 'digit'); 
+			->rule('max_results', 'digit');
 	}
 
 	public function execute(array $options)
@@ -51,7 +51,7 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 		$report = Report::factory('googleanalytics');
 
 		$report_params = array();
-		foreach ($options as $key => $value) 
+		foreach ($options as $key => $value)
 		{
 			if ($value)
 			{
@@ -60,7 +60,7 @@ class Minion_Task_Report_GoogleAnalytics extends Minion_Task
 			}
 		}
 
-		switch ($result) 
+		switch ($result)
 		{
 			case 'total':
 				Minion_CLI::write('Total: '.$report->total().' For '.join(', ', $report_params));

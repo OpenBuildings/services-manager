@@ -3,7 +3,7 @@
 /**
  * Google analytics service adapter
  * requires 'api-key' configuration
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
@@ -29,9 +29,9 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 
 	protected $_currency;
 
-	public function init() 
+	public function init()
 	{
-		
+
 	}
 
 	public function queue()
@@ -47,24 +47,24 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 	/**
 	 * This method accepts four parameters:
 	 *
-	 * @param integer index  — The slot for the custom variable. Required. 
-	 * This is a number whose value can range from 1 - 5, inclusive. 
+	 * @param integer index  — The slot for the custom variable. Required.
+	 * This is a number whose value can range from 1 - 5, inclusive.
 	 * A custom variable should be placed in one slot only and not be re-used across different slots.
-	 *           
-	 * @param string $name   — The name for the custom variable. Required. 
-	 * This is a string that identifies the custom variable and appears in the top-level 
+	 *
+	 * @param string $name   — The name for the custom variable. Required.
+	 * This is a string that identifies the custom variable and appears in the top-level
 	 * Custom Variables report of the Analytics reports.
 	 *
-	 * @param string $value  — The value for the custom variable. Required. 
-	 * This is a string that is paired with a name. 
-	 * You can pair a number of values with a custom variable name. 
-	 * The value appears in the table list of the UI for a selected variable name. 
-	 * Typically, you will have two or more values for a given name. 
+	 * @param string $value  — The value for the custom variable. Required.
+	 * This is a string that is paired with a name.
+	 * You can pair a number of values with a custom variable name.
+	 * The value appears in the table list of the UI for a selected variable name.
+	 * Typically, you will have two or more values for a given name.
 	 * For example, you might define a custom variable name gender and supply male and female as two possible values.
 	 *
-	 * @param integer $opt_scope — The scope for the custom variable. Optional. 
-	 * As described above, the scope defines the level of user engagement with your site. 
-	 * It is a number whose possible values are 1 (visitor-level), 2 (session-level), 
+	 * @param integer $opt_scope — The scope for the custom variable. Optional.
+	 * As described above, the scope defines the level of user engagement with your site.
+	 * It is a number whose possible values are 1 (visitor-level), 2 (session-level),
 	 * or 3 (page-level). When left undefined, the custom variable scope defaults to page-level interaction.
 	 */
 	public function set_custom_var($index, $name, $value, $opt_scope = self::SCOPE_PAGE)
@@ -110,7 +110,7 @@ abstract class Kohana_Service_Googleanalytics extends Service implements Service
 			return NULL;
 
 		$event_data = array(
-			'category' => $category, 
+			'category' => $category,
 			'action' => $action
 		);
 
@@ -168,7 +168,7 @@ ANALYTICS;
 	{
 		$events = NULL;
 
-		foreach ($this->queue() as $event) 
+		foreach ($this->queue() as $event)
 		{
 			$event_keys = array('category', 'action', 'label', 'value', 'opt_noninteraction');
 			$params = join(', ', array_filter(Arr::extract($event, $event_keys)));
@@ -183,7 +183,7 @@ ANALYTICS;
 	{
 		$code = NULL;
 
-		if ($this->_currency) 
+		if ($this->_currency)
 		{
 			$code .= "_gaq.push(['_set', 'currencyCode', '{$this->_currency}']);\n";
 		}
@@ -195,7 +195,7 @@ ANALYTICS;
 	{
 		$code = NULL;
 
-		if ($this->_transaction AND $this->_items) 
+		if ($this->_transaction AND $this->_items)
 		{
 			$transaction_code = array_merge(array('_addTrans'), $this->_transaction);
 

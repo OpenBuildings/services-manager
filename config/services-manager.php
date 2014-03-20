@@ -13,7 +13,7 @@ return array(
 		// 	'use-auth' => TRUE,
 		// 	'php-api' => TRUE,
 		// 	'more' => ""
-		// 	'notifications-for-role' => TRUE 
+		// 	'notifications-for-role' => TRUE
 		// ),
 		// 'kissinsights' => array(
 		// 	'api-file' => '',
@@ -41,7 +41,7 @@ return array(
 		// 		'newsletter' => 'd1329b67e3'
 		// 	)
 		// )
-		// 
+		//
 		// 'facebook' => array(
 		// 	'enabled' => TRUE,
 		// 	'auth' => array(

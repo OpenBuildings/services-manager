@@ -8,18 +8,18 @@
  * 	- service: the name of the service, optional
  * 	- domain: the name of the domain, optional
  * 	- period: month, week, day
- * 
+ *
  * @param string metric the name of the metric
  * @param string start_date the starting date, any strtotime format, defaults to yesterday
  * @param string end_date the end of the range date, any strtotime format, defaults to today
  */
-class Minion_Task_Report_Addthis_Filtered extends Minion_Task 
+class Minion_Task_Report_Addthis_Filtered extends Minion_Task
 {
 	protected $_config = array(
-		'metric' => FALSE, 
-		'domain' => FALSE, 
+		'metric' => FALSE,
+		'domain' => FALSE,
 		'filter' => FALSE,
-		'service' => FALSE, 
+		'service' => FALSE,
 		'period' => FALSE,
 	);
 
@@ -29,7 +29,7 @@ class Minion_Task_Report_Addthis_Filtered extends Minion_Task
 			->rule('period', 'in_array', array(':value', array('month', 'week', 'day')))
 			->rule('metric', 'not_empty')
 			->rule('metric', 'in_array', array(':value', array('shares', 'clicks', 'subscriptions', 'sharers', 'influencers', 'clickers', 'users', 'searches', 'referers')))
-			->rule('filter', 'not_empty'); 
+			->rule('filter', 'not_empty');
 	}
 
 	public function execute(array $options)
@@ -40,7 +40,7 @@ class Minion_Task_Report_Addthis_Filtered extends Minion_Task
 		$filter = $options['filter'];
 		unset($options['filter']);
 
-		foreach ($options as $key => $value) 
+		foreach ($options as $key => $value)
 		{
 			if ($value)
 			{

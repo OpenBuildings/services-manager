@@ -5,7 +5,7 @@ use Openbuildings\Swiftmailer\GoogleCampaignPlugin;
 /**
  * Exceptionalio service adapter
  * requires 'api-key' configuration
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
@@ -43,7 +43,7 @@ abstract class Kohana_Service_Mailchimp extends Service implements Service_Type_
 		if ( ! $this->initialized())
 			return NULL;
 
-		if (property_exists($this, $name)) 
+		if (property_exists($this, $name))
 		{
 			return $this->$name;
 		}

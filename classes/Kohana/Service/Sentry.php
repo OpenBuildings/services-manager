@@ -14,7 +14,7 @@ abstract class Kohana_Service_Sentry extends Service
 	private $client;
 
 	private $user_data = array('id' => NULL, 'email' => NULL, 'data' => NULL);
-	
+
 	/**
 	 * Send an exception to Sentry
 	 * @param  Exception $exception exception to be logged
@@ -28,7 +28,7 @@ abstract class Kohana_Service_Sentry extends Service
 		$id = NULL;
 		$email = NULL;
 
-		if (Auth::instance() AND ($user = Auth::instance()->get_user())) 
+		if (Auth::instance() AND ($user = Auth::instance()->get_user()))
 		{
 			$id = $user->id();
 			$email = $user->email;
@@ -39,7 +39,7 @@ abstract class Kohana_Service_Sentry extends Service
 
 	public function send_exception_with_user_data(Exception $exception, $id = NULL, $email = NULL, array $data = array())
 	{
-		$this->client()->set_user_data($id, $email, $data);	
+		$this->client()->set_user_data($id, $email, $data);
 
 		// Use getIdent to be future-proof when data returned from
 		// captureException might be somehow hashed in getIdent
@@ -50,7 +50,7 @@ abstract class Kohana_Service_Sentry extends Service
 	{
 		return $this->client;
 	}
-	
+
 	/**
 	 * Run Exceptional setup
 	 * @return NULL

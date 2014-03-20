@@ -3,7 +3,7 @@
 /**
  * Addthis service adapter
  * requires 'api-key' configuration
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
@@ -71,7 +71,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 				<a class=\"addthis_button_preferred_2\"></a>
 				<a class=\"addthis_button_preferred_3\"></a>
 				<a class=\"addthis_button_compact\">Share</a>
-			</div>";				
+			</div>";
 	}
 
 	/**
@@ -92,15 +92,15 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$attrs = HTML::attributes($attributes);
 		$url = Service::factory('facebook')->meta('og:image');
 		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" pi:pinit:url=\"{$attributes['addthis:url']}\" class=\"addthis_button_pinterest_pinit\" pi:pinit:layout=\"vertical\"></a>" : NULL;
-		
+
 		return "
 			<div $attrs>
 				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
 				<a class=\"addthis_button_tweet\" tw:count=\"vertical\"></a>
 				{$pin}
-			</div>";			
+			</div>";
 	}
-	
+
 	/**
 	 * Same style as vertical box, but horizontal
 	 * @param  string $url        Override the current request url
@@ -120,7 +120,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 
 		$url = Service::factory('facebook')->meta('og:image');
 		$pin = ($url AND is_string($url)) ? "<a pi:pinit:media=\"{$url}\" pi:pinit:url=\"{$attributes['addthis:url']}\" class=\"addthis_button_pinterest_pinit\" pi:pinit:layout=\"vertical\"></a>" : NULL;
-		
+
 		return "
 			<div $attrs>
 				<a class=\"addthis_button_facebook_like\" fb:like:layout=\"box_count\"></a>
@@ -133,7 +133,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 	{
 		if ( ! $this->initialized())
 			return NULL;
-	
+
 		$attributes = (array) $attributes;
 		$attributes['addthis:url'] = $url ? $url : URL::site(Request::initial()->url(), TRUE);
 		$attributes['class'] = Arr::get($attributes, 'class').' addthis_toolbox addthis_default_style';
@@ -141,7 +141,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 		$pinterest_media = Arr::get($attributes, 'pi:pinit:media', Service::factory('facebook')->meta('og:image'));
 		unset($attributes['pi:pinit:media']);
 		$attrs = HTML::attributes($attributes);
-	
+
 		$pin = ($pinterest_media AND is_string($pinterest_media)) ? "<a pi:pinit:media=\"{$pinterest_media}\" pi:pinit:url=\"{$attributes['addthis:url']}\" class=\"addthis_button_pinterest_pinit\"></a>" : NULL;
 
 		$include = (isset($include) AND is_array($include)) ? $include : array('facebook', 'pinterest');
@@ -152,7 +152,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 			'twitter' => "<a class=\"addthis_button_tweet\"></a>",
 			'email' => HTML::anchor('http://www.addthis.com/bookmark.php', 'Share via email', array('class' => 'addthis_button_email share-email2 icon-mail'))
 		);
-		
+
 		$buttons = join('', Arr::extract($buttons, $include));
 
 		return "
@@ -160,8 +160,8 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 				{$buttons}
 			</div>";
 	}
-	
-	
+
+
 	/**
 	 * Render the javascript for addthis and render the script tag with the addthis_config variable
 	 * @return string
@@ -170,7 +170,7 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
 	{
 		if ( ! $this->initialized())
 			return NULL;
-		
+
 		$addthis_config = json_encode((object) $this->addthis_config);
 
 		$render = <<<ANALYTICS
@@ -180,6 +180,6 @@ abstract class Kohana_Service_Addthis extends Service implements Service_Type_Ja
   	</script>
 ANALYTICS;
 
-		return strtr($render, array(':user-email' => $this->user_email)); 
+		return strtr($render, array(':user-email' => $this->user_email));
 	}
 }

@@ -53,11 +53,11 @@ class Service_SentryTest extends Testcase_Extended {
 		$result_3 = $sentry
 			->capture_exception($exception);
 
-		$this->assertEquals('test_id_3', $result_3);		
+		$this->assertEquals('test_id_3', $result_3);
 
 		$result_4 = $sentry
 			->capture_exception($exception, $data);
 
-		$this->assertEquals('test_id_4', $result_4);		
+		$this->assertEquals('test_id_4', $result_4);
 	}
 }

@@ -2,7 +2,7 @@
 
 /**
  * Interface for javascript interfaces must be renderable
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.

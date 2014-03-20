@@ -12,7 +12,7 @@ return array(
 
 			// The name that should show up on the userguide index page
 			'name' => 'Services manager',
-			
+
 		)
 	)
 );

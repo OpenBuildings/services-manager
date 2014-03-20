@@ -3,7 +3,7 @@
 /**
  * Chartbeat service adapter
  * requires 'config' configuration with uid and domain keys
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
@@ -59,7 +59,7 @@ abstract class Kohana_Service_Chartbeat extends Service implements Service_Type_
 	{
 		if ( ! $this->initialized())
 			return NULL;
-		
+
 		$config = json_encode((object) $this->_config);
 
 		return <<<ANALYTICS

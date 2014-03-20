@@ -3,7 +3,7 @@
 abstract class Testcase_Extended extends PHPUnit_Framework_TestCase {
 
 	// public $environment;
-	
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -18,8 +18,8 @@ abstract class Testcase_Extended extends PHPUnit_Framework_TestCase {
 
 	public function tearDown()
 	{
-		// Database::instance()->rollback();	
-		
+		// Database::instance()->rollback();
+
 		// $this->env->restore();
 
 		parent::tearDown();

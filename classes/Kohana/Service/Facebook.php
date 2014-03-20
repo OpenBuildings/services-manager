@@ -49,7 +49,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 	{
 		if ( ! $this->initialized())
 			return NULL;
-		
+
 		return $this->api('/'.$opengraph_id, 'DELETE');
 	}
 
@@ -68,7 +68,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 
 		if ( ! $this->permissions('publish_stream'))
 			throw new Kohana_Exception("The user has not granted permission to publish to his stream");
-		
+
 		$defaults = Arr::get($this->_config, 'post', array());
 
 		$attachment = Arr::merge($defaults, array(
@@ -288,7 +288,7 @@ abstract class Kohana_Service_Facebook extends Service implements Service_Type_P
 		return <<<BODY
 			<div id="fb-root"></div>
 			<script>
-				window.fbAsyncInit = function() { 
+				window.fbAsyncInit = function() {
 					FB.init($options);
 					if (window.afterFbAsyncInit)
 					{

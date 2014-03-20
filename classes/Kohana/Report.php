@@ -3,7 +3,7 @@
 /**
  * The basic class for managing analytics data.
  * Adds basic consistent timerange setting
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
@@ -11,12 +11,12 @@
  */
 abstract class Kohana_Report
 {
-	
+
 	/**
 	 * Get the report. Configuration is in the services-manager under the same name.
 	 * The driver name is named the same as the report name
-	 * 
-	 * @param  string $report_name 
+	 *
+	 * @param  string $report_name
 	 * @return Service
 	 */
 	static public function factory($report_name)
@@ -40,8 +40,8 @@ abstract class Kohana_Report
 	/**
 	 * Getter / Setter
 	 * Set the timerange start date, defaults to 1 month ago. Normalizes the date to Y-m-d H:i:s
-	 * 
-	 * @param  string $start_date 
+	 *
+	 * @param  string $start_date
 	 * @return string
 	 */
 	public function start_date($start_date = NULL)
@@ -54,12 +54,12 @@ abstract class Kohana_Report
 
 		return $this->_start_date;
 	}
-	
+
 	/**
 	 * Getter / Setter
 	 * Set the timerange end date, defaults to today. Normalizes the date to Y-m-d H:i:s
-	 * 
-	 * @param  string $end_date 
+	 *
+	 * @param  string $end_date
 	 * @return string
 	 */
 	public function end_date($end_date = NULL)

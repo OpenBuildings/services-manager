@@ -1,9 +1,9 @@
 <?php
 
 /**
- * An interface for Addthis Analytics API. 
+ * An interface for Addthis Analytics API.
  * It is able to return data only a month back.
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
@@ -19,10 +19,10 @@ class Kohana_Report_Addthis extends Report
 	protected $_url;
 	protected $_dimension = 'day';
 	protected $_period = 'month';
-	
+
 	/**
 	 * Getter / Setter
-	 * Which metric to count 
+	 * Which metric to count
 	 *
 	 * @link http://support.addthis.com/customer/portal/articles/381264-addthis-analytics-api
 	 * @param  string $metric
@@ -58,7 +58,7 @@ class Kohana_Report_Addthis extends Report
 		}
 		return $this->_url;
 	}
-	
+
 	public function service($service = NULL)
 	{
 		if ($service !== NULL)
@@ -68,7 +68,7 @@ class Kohana_Report_Addthis extends Report
 		}
 		return $this->_service;
 	}
-	
+
 	public function dimension($dimension = NULL)
 	{
 		if ($dimension !== NULL)
@@ -77,7 +77,7 @@ class Kohana_Report_Addthis extends Report
 			return $this;
 		}
 		return $this->_dimension;
-	}	
+	}
 
 	public function period($period = NULL)
 	{
@@ -91,7 +91,7 @@ class Kohana_Report_Addthis extends Report
 
 	/**
 	 * Get the Raw data from Addthis API, day by day for a month
-	 * @return array 
+	 * @return array
 	 */
 	public function data()
 	{
@@ -105,7 +105,7 @@ class Kohana_Report_Addthis extends Report
 					'period' => $this->period(),
 				))
 				->headers('Authorization', 'Basic '.base64_encode(join(':', Arr::extract($config, array('username', 'password')))));
-			
+
 			if ($this->domain())
 			{
 				$request->query('domain', $this->domain());

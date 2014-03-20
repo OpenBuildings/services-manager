@@ -20,9 +20,9 @@ class Kohana_Service_Beanstalkd extends Service implements Service_Type_Php
 	{
 		if ( ! $this->initialized())
 			return NULL;
-		
+
 		$return = call_user_func_array(array($this->_pheanstalk, $method), $args);
-		
+
 		return $return instanceof Pheanstalk ? $this : $return;
 	}
 

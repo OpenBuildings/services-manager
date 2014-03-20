@@ -1,7 +1,7 @@
 Services Manager
 ================
 
-This modules purpose is to ease out the management of various external services that your application may depend upon. Each service is governed by a single easily reachable class that does all the required loading of PHP or Javascript, 
+This modules purpose is to ease out the management of various external services that your application may depend upon. Each service is governed by a single easily reachable class that does all the required loading of PHP or Javascript,
 
 Setting up:
 -----------
@@ -32,7 +32,7 @@ Each service has its own configuration, you can see the default configuration in
 Usage:
 ------
 
-Some services have helper methods to be used throughout your code. The general principle is that those methods will fail silently if the service is disabled for some reason or another. 
+Some services have helper methods to be used throughout your code. The general principle is that those methods will fail silently if the service is disabled for some reason or another.
 
 For example this will render an addthis toolbox with sharing options for the current url, but if the service is disabled, it will return an empty string, thus your site should not be affected by disabling of the services and continue operation:
 

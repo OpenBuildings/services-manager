@@ -6,7 +6,7 @@ use OAuth\Common\Consumer\Credentials;
 
 /**
  * An interface for google analytics API
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
@@ -26,10 +26,10 @@ class Kohana_Report_Googleanalytics extends Report
 	protected $_segment;
 	protected $_start_index;
 	protected $_date_template = 'Y-m-d';
-	
+
 	/**
 	 * Build all the request query parameters needed to access the google analytics API
-	 * @return array 
+	 * @return array
 	 */
 	public function request_params()
 	{
@@ -70,7 +70,7 @@ class Kohana_Report_Googleanalytics extends Report
 
 	/**
 	 * Generate a new access token for google analytics API using client_id, client_secret and refresh_token, set in the config
-	 * @return string 
+	 * @return string
 	 */
 	public function access_token()
 	{
@@ -105,7 +105,7 @@ class Kohana_Report_Googleanalytics extends Report
 
 	/**
 	 * Get the result from calling Google Anlaytics API
-	 * @return array 
+	 * @return array
 	 */
 	public function retrieve()
 	{
@@ -114,7 +114,7 @@ class Kohana_Report_Googleanalytics extends Report
 
 	/**
 	 * Rows from Google Analytics API response
-	 * @return array 
+	 * @return array
 	 */
 	public function rows()
 	{
@@ -147,7 +147,7 @@ class Kohana_Report_Googleanalytics extends Report
 		}
 		return $this->_max_results;
 	}
-	
+
 	/**
 	 * Getter / Setter
 	 * A list of comma-separated dimensions for your Analytics data, such as ga:browser,ga:city.
@@ -165,13 +165,13 @@ class Kohana_Report_Googleanalytics extends Report
 		}
 		return $this->_dimensions;
 	}
-	
+
 	/**
 	 * Getter / Setter
 	 * A list of comma-separated metrics, such as ga:visits,ga:bounces.
 	 *
-	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#metrics 
-	 * @param  string $metrics 
+	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#metrics
+	 * @param  string $metrics
 	 * @return string|Report_GoogleAnalytics
 	 */
 	public function metrics($metrics = NULL)
@@ -183,7 +183,7 @@ class Kohana_Report_Googleanalytics extends Report
 		}
 		return $this->_metrics;
 	}
-	
+
 	/**
 	 * Getter / Setter
 	 * A list of comma-separated dimensions and metrics indicating the sorting order and sorting direction for the returned data.
@@ -207,7 +207,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 * Dimension or metric filters that restrict the data returned for your request.
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters
-	 * @param  string $filters 
+	 * @param  string $filters
 	 * @return string|Report_GoogleAnalytics
 	 */
 	public function filters($filters = NULL)
@@ -218,7 +218,7 @@ class Kohana_Report_Googleanalytics extends Report
 			return $this;
 		}
 		return $this->_filters;
-	}	
+	}
 
 	/**
 	 * Getter / Setter
@@ -243,7 +243,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 * The first row of data to retrieve, starting at 1. Use this parameter as a pagination mechanism along with the max-results parameter.
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#startIndex
-	 * @param  string $start_index 
+	 * @param  string $start_index
 	 * @return string|Report_GoogleAnalytics
 	 */
 	public function start_index($start_index = NULL)

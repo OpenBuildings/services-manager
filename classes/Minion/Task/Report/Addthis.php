@@ -8,16 +8,16 @@
  * 	- domain: the name of the domain, optional
  * 	- start_date: the starting date, any strtotime format, defaults to yesterday
  * 	- end_date: the end of the range date, any strtotime format, defaults to today
- * 
+ *
  */
-class Minion_Task_Report_Addthis extends Minion_Task 
+class Minion_Task_Report_Addthis extends Minion_Task
 {
 	protected $_config = array(
-		'metric' => FALSE, 
-		'domain' => FALSE, 
+		'metric' => FALSE,
+		'domain' => FALSE,
 		'url' => FALSE,
-		'service' => FALSE, 
-		'start_date' => 'last week', 
+		'service' => FALSE,
+		'start_date' => 'last week',
 		'end_date' => 'today',
 	);
 
@@ -26,16 +26,16 @@ class Minion_Task_Report_Addthis extends Minion_Task
 		return parent::build_validation($validation)
 			->rule('metric', 'not_empty')
 			->rule('metric', 'in_array', array(':value', array('shares', 'clicks', 'subscriptions', 'sharers', 'influencers', 'clickers', 'users', 'searches', 'referers')))
-			->rule('start_date', 'strtotime') 
+			->rule('start_date', 'strtotime')
 			->rule('end_date', 'strtotime')
-			->rule('url', 'url'); 
+			->rule('url', 'url');
 	}
 
 	public function execute(array $options)
 	{
 		$report = Report::factory('addthis');
 		$report_params = array();
-		foreach ($options as $key => $value) 
+		foreach ($options as $key => $value)
 		{
 			if ($value)
 			{

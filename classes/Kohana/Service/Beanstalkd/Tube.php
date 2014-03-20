@@ -5,23 +5,23 @@ abstract class Kohana_Service_Beanstalkd_Tube {
 	protected $_tube_name;
 	protected $_refresh_database = TRUE;
 
-	function __construct($tube_name) 
+	function __construct($tube_name)
 	{
 		$this->_tube_name = $tube_name;
 
 		if ($this->_refresh_database)
 		{
-			Database::instance()->connect();	
+			Database::instance()->connect();
 		}
 	}
 
 	public function process_job(Pheanstalk_Job $job)
 	{
-		try 
+		try
 		{
 			$this->execute($job->getData());
-		} 
-		catch (Exception $exception) 
+		}
+		catch (Exception $exception)
 		{
 			$this->handle_exception($exception);
 		}
@@ -43,7 +43,7 @@ abstract class Kohana_Service_Beanstalkd_Tube {
 	{
 		if ($this->_refresh_database)
 		{
-			Database::instance()->disconnect();	
+			Database::instance()->disconnect();
 		}
 	}
 

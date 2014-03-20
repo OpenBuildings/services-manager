@@ -3,7 +3,7 @@
 /**
  * Exceptionalio service adapter
  * requires 'api-key' configuration
- * 
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.

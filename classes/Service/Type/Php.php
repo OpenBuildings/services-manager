@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
 /**
- * Interface for php interfaces 
- * 
+ * Interface for php interfaces
+ *
  * @package    Despark/services-manager
  * @author     Ivan Kerin
  * @copyright  (c) 2012 Despark Ltd.
