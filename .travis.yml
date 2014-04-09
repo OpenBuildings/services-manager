@@ -3,21 +3,24 @@ language: php
 
 php:
   - 5.3
+  - 5.4
 
 notifications:
-  campfire:
-    rooms:
-      secure: Cn+Vouj2Mg6hcvg1iR/zGM8iOhBWksAwQVKcUR1e/7kYTduNfMTI8miaMDIyDHsafibrvf/5QxvL7H0yU+tQUJ7HZID359z3VXpuA3PTno7BdwbvlklKyRBmjn+/6vAG9g/5wT56QKSBnxaUo4Qxv4q1naFdf3o8wM22MtiB0Ck=
+  email: false
+  slack:
+    secure: CN8b/Vyc+E8aCzom7J+XvrJqkrha0aAqHHqFDlE5j2jqrW4Uxv+lKQhbjaYkMFoNH5W8L/qD415nTgxLP0z0nh0xqy3GmTqx3WqeggDMMotur9EIJzfjFNhYK6Gfp0I97bVkpDX1m31shO5/cnRtiKzDwaPfJom2/S+oime0iQY=
 
-script:
-  - phpunit --coverage-clover build/logs/clover.xml
+install:
+  - composer selfupdate
+  - composer install --no-interaction
 
 before_script:
   - mkdir -p build/logs
-  - composer require --dev satooshi/php-coveralls:dev-master
-  - composer install
   - mysql -e 'create database `test-services-manager`;'
   - mysql --default-character-set=utf8 test-services-manager < tests/test_data/structure.sql
+
+script:
+  - phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
