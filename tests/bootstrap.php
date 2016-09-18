@@ -23,14 +23,14 @@ Kohana::modules(array(
 Kohana::$config
 	->load('database')
 		->set('default', array(
-			'type'       => 'MySQL',
+			'type'       => 'PDO',
 			'connection' => array(
-				'hostname'   => 'localhost',
-				'database'   => 'test-services-manager',
+                'dsn' => 'mysql:host=localhost;dbname=test-services-manager',
 				'username'   => 'root',
 				'password'   => '',
 				'persistent' => TRUE,
 			),
+            'identifier' => '`',
 			'table_prefix' => '',
 			'charset'      => 'utf8',
 			'caching'      => FALSE,

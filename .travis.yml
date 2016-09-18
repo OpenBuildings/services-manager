@@ -1,26 +1,52 @@
 ---
 language: php
 
+sudo: false
+
 php:
   - 5.3
   - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - hhvm
+
+env:
+  - DEPS=normal
+  - DEPS=highest
+  - DEPS=lowest
+
+matrix:
+  fast_finish: true
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 notifications:
   email: false
   slack:
-    secure: CN8b/Vyc+E8aCzom7J+XvrJqkrha0aAqHHqFDlE5j2jqrW4Uxv+lKQhbjaYkMFoNH5W8L/qD415nTgxLP0z0nh0xqy3GmTqx3WqeggDMMotur9EIJzfjFNhYK6Gfp0I97bVkpDX1m31shO5/cnRtiKzDwaPfJom2/S+oime0iQY=
+    secure: j0M/YHcUXUB3WIkGM2zVodP7FePghAJ4WsqsloTHfelGTbO3MNfA7bQy+rqixm3bSd4EoAa5AKt74eyDzORkpovXQX0gcP6HsskSNoRUthP1tNPj0c8/yvpWExOcQQO3l39vAJKpdKGOp/KXraU0j36m9lbte2e+Pyg0kUHKDaA=
+
+before_install: travis_retry composer selfupdate --preview
 
 install:
-  - composer selfupdate
-  - composer install --no-interaction
+  - if [ "$DEPS" = "normal" ]; then travis_retry composer install --no-interaction; fi;
+  - if [ "$DEPS" = "highest" ]; then travis_retry composer update --no-interaction; fi;
+  - if [ "$DEPS" = "lowest" ]; then travis_retry composer update --no-interaction --prefer-lowest --prefer-stable; fi;
 
 before_script:
   - mkdir -p build/logs
   - mysql -e 'create database `test-services-manager`;'
-  - mysql --default-character-set=utf8 test-services-manager < tests/test_data/structure.sql
+  - mysql test-services-manager < tests/test_data/structure.sql
 
 script:
-  - phpunit --coverage-clover build/logs/clover.xml
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
