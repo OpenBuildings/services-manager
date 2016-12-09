@@ -15,8 +15,6 @@ require_once __DIR__.'/../vendor/autoload.php';
 Kohana::modules(array(
 	'database'         => MODPATH.'database',
 	'auth'             => MODPATH.'auth',
-	'jam'              => __DIR__.'/../modules/jam',
-	'jam-auth'         => __DIR__.'/../modules/jam-auth',
 	'services-manager' => __DIR__.'/..',
 ));
 
