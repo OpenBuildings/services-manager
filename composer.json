@@ -41,6 +41,7 @@
 		"lusitanian/oauth": "0.2.*",
 		"openbuildings/kohana-test-bootstrap": "^0.2.0",
 		"openbuildings/jam-auth": "^0.4.3",
-		"phpunit/phpunit": "^4.0, <4.5"
+		"phpunit/phpunit": "^4.0, <4.5",
+		"kohana/auth": "^3.3"
 	}
 }
