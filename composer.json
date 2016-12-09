@@ -38,8 +38,10 @@
 		"composer/installers": "*"
 	},
 	"require-dev": {
-		"openbuildings/kohana-test-bootsrap": "0.1.*",
-		"openbuildings/jam-auth": "0.3.*",
-		"lusitanian/oauth": "0.2.*"
+		"lusitanian/oauth": "0.2.*",
+		"openbuildings/kohana-test-bootstrap": "^0.2.0",
+		"openbuildings/jam-auth": "^0.4.3",
+		"phpunit/phpunit": "^4.0, <4.5",
+		"kohana/auth": "^3.3"
 	}
 }
