@@ -17,7 +17,7 @@ abstract class Kohana_Report
 	 * The driver name is named the same as the report name
 	 *
 	 * @param  string $report_name
-	 * @return Service
+	 * @return Report
 	 */
 	static public function factory($report_name)
 	{
