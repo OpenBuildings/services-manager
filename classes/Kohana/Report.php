@@ -42,7 +42,7 @@ abstract class Kohana_Report
 	 * Set the timerange start date, defaults to 1 month ago. Normalizes the date to Y-m-d H:i:s
 	 *
 	 * @param  string $start_date
-	 * @return string
+	 * @return string|$this
 	 */
 	public function start_date($start_date = NULL)
 	{
@@ -60,7 +60,7 @@ abstract class Kohana_Report
 	 * Set the timerange end date, defaults to today. Normalizes the date to Y-m-d H:i:s
 	 *
 	 * @param  string $end_date
-	 * @return string
+	 * @return string|$this
 	 */
 	public function end_date($end_date = NULL)
 	{

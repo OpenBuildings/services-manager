@@ -51,7 +51,7 @@ class Kohana_Report_Googleanalytics extends Report
 
 	/**
 	 * Return the project_id set in the config or set it for this report
-	 * @return string
+	 * @return string|$this
 	 */
 	public function project_id($project_id = NULL)
 	{
@@ -136,7 +136,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#maxResults
 	 * @param  string $max_results
-	 * @return string|Report_GoogleAnalytics
+	 * @return string|$this
 	 */
 	public function max_results($max_results = NULL)
 	{
@@ -154,7 +154,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#dimensions
 	 * @param  string $dimensions
-	 * @return string|Report_GoogleAnalytics
+	 * @return string|$this
 	 */
 	public function dimensions($dimensions = NULL)
 	{
@@ -172,7 +172,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#metrics
 	 * @param  string $metrics
-	 * @return string|Report_GoogleAnalytics
+	 * @return string|$this
 	 */
 	public function metrics($metrics = NULL)
 	{
@@ -190,7 +190,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#sort
 	 * @param  string $sort
-	 * @return string|Report_GoogleAnalytics
+	 * @return string|$this
 	 */
 	public function sort($sort = NULL)
 	{
@@ -208,7 +208,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters
 	 * @param  string $filters
-	 * @return string|Report_GoogleAnalytics
+	 * @return string|$this
 	 */
 	public function filters($filters = NULL)
 	{
@@ -226,7 +226,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#segment
 	 * @param  string $segment
-	 * @return string|Report_GoogleAnalytics
+	 * @return string|$this
 	 */
 	public function segment($segment = NULL)
 	{
@@ -244,7 +244,7 @@ class Kohana_Report_Googleanalytics extends Report
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#startIndex
 	 * @param  string $start_index
-	 * @return string|Report_GoogleAnalytics
+	 * @return string|$this
 	 */
 	public function start_index($start_index = NULL)
 	{
