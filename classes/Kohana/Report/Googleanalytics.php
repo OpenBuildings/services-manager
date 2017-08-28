@@ -135,8 +135,8 @@ class Kohana_Report_Googleanalytics extends Report
 	 * The maximum number of rows to include in the response.
 	 *
 	 * @link https://developers.google.com/analytics/devguides/reporting/core/v3/reference#maxResults
-	 * @param  string $max_results
-	 * @return string|$this
+	 * @param  int $max_results
+	 * @return int|$this
 	 */
 	public function max_results($max_results = NULL)
 	{
