@@ -12,7 +12,7 @@ use OAuth\Common\Consumer\Credentials;
  * @copyright  (c) 2012 Despark Ltd.
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
-class Kohana_Report_Googleanalytics extends Report
+class Kohana_Report_GoogleAnalytics extends Report
 {
 	const URL = 'https://www.googleapis.com/analytics/v3/data/ga';
 

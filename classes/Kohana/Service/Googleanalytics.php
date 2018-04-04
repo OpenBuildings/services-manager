@@ -9,7 +9,7 @@
  * @copyright  (c) 2012 Despark Ltd.
  * @license    http://creativecommons.org/licenses/by-sa/3.0/legalcode
  */
-abstract class Kohana_Service_Googleanalytics extends Service implements Service_Type_Javascript {
+abstract class Kohana_Service_GoogleAnalytics extends Service implements Service_Type_Javascript {
 
 	const SCOPE_VISITOR = 1;
 
